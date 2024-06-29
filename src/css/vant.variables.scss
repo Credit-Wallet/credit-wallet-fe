@@ -22,9 +22,10 @@
   // Gradient Colors
   --van-gradient-red: linear-gradient(to right, #ff6034, #ee0a24);
   --van-gradient-orange: linear-gradient(to right, #ffd01e, #ff8917);
+  --van-gradient-purple: linear-gradient(to right, #8e2de2, #4a00e0);
 
   // Component Colors
-  --van-primary-color: #c60fe7;
+  --van-primary-color: #9C27B0;
   --van-success-color: var(--van-green);
   --van-danger-color: var(--van-red);
   --van-warning-color: var(--van-orange);
@@ -73,4 +74,9 @@
   --van-radius-md: 4px;
   --van-radius-lg: 8px;
   --van-radius-max: 999px;
+}
+
+:root:root {
+  --van-button-primary-background: var(--van-gradient-purple);
+  --van-button-primary-border: var(--van-gradient-purple);
 }

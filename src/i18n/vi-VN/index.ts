@@ -1,6 +1,9 @@
 export default {
   'home': {
     'title': 'Trang chủ',
+    'wallet': {
+      primaryWallet: 'Ví chính',
+    }
   },
   'history': {
     'title': 'Lịch sử',

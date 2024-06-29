@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import SelectWallet from 'components/homes/SelectWallet.vue';
+
 defineOptions({
   name: 'HomePage'
 });
@@ -12,13 +14,15 @@ defineOptions({
       shape="round"
       placeholder="Placeholder"
     />
-    <van-notice-bar
-      text="Technology is the common soul of the people who developed it."
-      left-icon="volume-o"
-    />
+
+    <div class="tw-p-4">
+      <select-wallet />
+    </div>
   </q-page>
 </template>
 
 <style scoped>
-
+:deep(.van-search) {
+  padding: 16px 16px 0 16px !important;
+}
 </style>
