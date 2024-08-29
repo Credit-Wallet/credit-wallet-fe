@@ -3,6 +3,7 @@ import SelectNetwork from 'components/homes/SelectNetwork.vue';
 import ActionNetwork from 'components/homes/ActionNetwork.vue';
 import EmptyNetwork from 'components/homes/EmptyNetwork.vue';
 import { useNetworkStore } from 'stores/network-store';
+import ListNetwork from 'components/homes/network/ListNetwork.vue';
 
 defineOptions({
   name: 'HomePage'
@@ -27,6 +28,8 @@ const networks = useNetworkStore()
         <SelectNetwork />
 
         <ActionNetwork />
+
+        <ListNetwork class="tw-mt-4" />
       </div>
     </div>
   </q-page>

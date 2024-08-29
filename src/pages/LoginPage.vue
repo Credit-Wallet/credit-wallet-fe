@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import LoginForm from 'components/authen/LoginForm.vue';
 import { ref } from 'vue';
 import RegisterForm from 'components/authen/RegisterForm.vue';
@@ -31,7 +31,7 @@ const isLogin = ref(true);
       </p>
       <p class="tw-text-center tw-text-gray-600" v-else>
         Already have an account ?
-        <span class="tw-text-primary text-weight-bold" @click="isLogin = true">
+        <span class="tw-text-primary text-weight-bold">
           Login
         </span>
       </p>

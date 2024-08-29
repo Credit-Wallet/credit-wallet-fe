@@ -1,6 +1,7 @@
-<script setup lang="ts">
-
+<script setup>
 import { ref } from 'vue';
+import AuthAPI from 'app/api/auth';
+import { useRouter } from 'vue-router';
 
 const form = ref({
   email: '',
@@ -8,8 +9,19 @@ const form = ref({
   rememberMe: false,
 });
 
-const onSubmit = () => {
-  console.log('Login successful with', form.value.email, form.value.password);
+const $router = useRouter();
+
+const onSubmit = async () => {
+  try {
+    const response = await AuthAPI.login({
+      email: form.value.email,
+      password: form.value.password,
+    });
+    localStorage.setItem('access_token', response.result?.token ?? '');
+    await $router.push('/');
+  } catch (error) {
+    console.log('Login failed:', error);
+  }
 }
 
 const forgotPassword = () => {
