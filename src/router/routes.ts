@@ -33,6 +33,18 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/AuthenLayout.vue'),
     children: [{ path: '', component: () => import('pages/LoginPage.vue')}],
   },
+  {
+    path: '/home/create-transaction',
+    component: () => import('layouts/NavbarLayout.vue'),
+    props: { title: 'Chọn người' },
+    children: [{ path: '', component: () => import('pages/home/transaction/CreateTransaction.vue'), meta: { requiresAuth: true }}],
+  },
+  {
+    path: '/home/confirm-transaction',
+    component: () => import('layouts/NavbarLayout.vue'),
+    props: { title: 'Xác nhận' },
+    children: [{ path: '', component: () => import('pages/home/transaction/ConfirmTransaction.vue'), meta: { requiresAuth: true }}],
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

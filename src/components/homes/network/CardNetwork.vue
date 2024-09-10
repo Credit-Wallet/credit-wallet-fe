@@ -1,11 +1,29 @@
-<script setup lang="ts">
-
+<script setup>
 import { ref } from 'vue';
 import FormWallet from 'components/homes/network/FormNetwork.vue';
 import { useNetworkStore } from 'stores/network-store';
+import AccountAPI from 'app/api/account';
 
+const emit = defineEmits(['closeSheetWallet'])
 const dialogEditWallet = ref(false)
 const networks = useNetworkStore()
+
+const selectNetwork = async (network) => {
+  console.log('Select network:', network);
+  await AccountAPI.selectedNetwork(network.id).then(() => {
+    networks.selectNetwork(network)
+    emit('closeSheetWallet')
+  }).catch((error) => {
+    console.log('Select network failed:', error);
+  });
+
+  await AccountAPI.getAccountsByNetworkId({ networkId: network.id }).then((response) => {
+    networks.resetMembers();
+    networks.addMembers(response.result);
+  }).catch((error) => {
+    console.log('Fetch networks failed:', error);
+  });
+}
 </script>
 
 <template>
@@ -16,6 +34,7 @@ const networks = useNetworkStore()
       desc="Đây là ví chính"
       v-for="(network, index) in networks.networks"
       :key="index"
+      @click="selectNetwork(network)"
     >
       <template #title>
         <div class="tw-flex tw-justify-between">

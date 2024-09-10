@@ -1,19 +1,20 @@
-<script setup lang="ts">
-import { computed, ref } from 'vue';
-import qrTest from 'assets/images/qr_test.webp'
+<script setup>
+import { computed, onMounted, ref } from 'vue';
+// import qrTest from 'assets/images/qr_test.webp'
 import { showToast } from 'vant';
+import NetworkAPI from 'app/api/network';
+import { useNetworkStore } from 'stores/network-store';
 
-interface Props {
-  modelValue: boolean
-}
-
-const props = defineProps<Props>()
+const props = defineProps({
+  modelValue: Boolean,
+})
 const emit = defineEmits(['update:modelValue'])
 
 const show = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:modelValue', value)
 })
+
 const showShare = ref(false)
 const options = [
   { name: 'WeChat', icon: 'wechat' },
@@ -21,10 +22,26 @@ const options = [
   { name: 'Link', icon: 'link' },
   { name: 'Poster', icon: 'poster' },
 ];
-const onSelect = (option: { name: string }) => {
+const qrJoinCode = ref('');
+const networks = useNetworkStore()
+
+const onSelect = (option) => {
   showToast(option.name);
   showShare.value = false;
 };
+
+const generateQRCode = async () => {
+  try {
+    const response = await NetworkAPI.qrJoin({ id: networks.selectedNetwork.id });
+    qrJoinCode.value = `data:image/gif;base64, ${response}`;
+  } catch (error) {
+    console.log('Generate QR code failed:', error);
+  }
+}
+
+onMounted(() => {
+  generateQRCode();
+})
 </script>
 
 <template>
@@ -32,8 +49,8 @@ const onSelect = (option: { name: string }) => {
     <template #default>
       <div class="tw-pl-4 tw-pr-4">
         <van-row justify="center" class="tw-my-4">
-          <van-col span="15">
-            <van-image :src="qrTest" width="250" height="250" class="tw-ml-[-12px]"/>
+          <van-col>
+            <img :src="qrJoinCode" alt=""/>
           </van-col>
         </van-row>
       </div>

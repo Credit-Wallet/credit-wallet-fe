@@ -1,9 +1,10 @@
 type Network = {
+  id: '',
   name: '',
-  maxRedundancy: '',
-  maxDebt: '',
+  minBalance: '',
+  maxBalance: '',
   maxMember: '',
-  typeMoney: '',
+  currency: '',
 };
 
 export type { Network };

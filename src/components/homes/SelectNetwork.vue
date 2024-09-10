@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Wallet from 'components/homes/network/CardNetwork.vue';
-import CreateWallet from 'components/homes/network/CreateNetwork.vue';
+import CardNetwork from 'components/homes/network/CardNetwork.vue';
+import CreateNetwork from 'components/homes/network/CreateNetwork.vue';
 import { useNetworkStore } from 'stores/network-store';
 
 const balance = ref(0)
@@ -37,13 +37,13 @@ const networks = useNetworkStore()
         </div>
 
         <div>
-          <wallet />
+          <card-network @close-sheet-wallet="sheetWallet = false" />
         </div>
       </div>
     </template>
   </van-action-sheet>
 
-  <create-wallet v-model:showDialog="dialogCreateWallet" />
+  <create-network v-model:showDialog="dialogCreateWallet" />
 </template>
 
 <style scoped lang="scss">

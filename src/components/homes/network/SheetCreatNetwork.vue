@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { useNetworkStore } from 'stores/network-store';
 import { Network } from 'src/types/models/Network';
 import { showSuccessToast } from 'vant';
+import NetworkAPI from 'app/api/network';
 
 const networks = useNetworkStore()
 
@@ -14,6 +15,7 @@ const showSheet = defineModel<boolean>('showSheet', {
 const formNetworkRef = ref<InstanceType<typeof FormNetwork> | null>()
 
 const form = ref<Network>({
+  id: '',
   name: '',
   maxRedundancy: '',
   maxDebt: '',
@@ -23,6 +25,7 @@ const form = ref<Network>({
 
 const resetForm = () => {
   form.value = {
+    id: '',
     name: '',
     maxRedundancy: '',
     maxDebt: '',
@@ -31,11 +34,16 @@ const resetForm = () => {
   };
 }
 
-const createNetwork = () => {
-  networks.addNetwork(form.value)
-  showSuccessToast('Tạo mạng thành công')
-  showSheet.value = false
-  resetForm()
+const createNetwork = async () => {
+  try {
+    const response = await NetworkAPI.add(form.value);
+    networks.addNetwork(response.result as Network)
+    showSuccessToast('Tạo mạng thành công')
+    showSheet.value = false
+    resetForm()
+  } catch (error) {
+    console.log('Create network failed:', error);
+  }
 }
 </script>
 
