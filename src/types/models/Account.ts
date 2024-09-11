@@ -2,7 +2,7 @@ type Account = {
   id: '',
   username: '',
   email: '',
-  selectedNetwork: '',
+  selectedNetworkId: '',
 };
 
 export type { Account };

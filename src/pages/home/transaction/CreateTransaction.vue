@@ -71,6 +71,7 @@ const removeMember = (member) => {
 const continueTransaction = () => {
   console.log('Continue transaction');
   transaction.setMoney(money.value, listSelectedTransaction.value);
+  transaction.setNetworkId(networks.selectedNetwork.id);
   console.log('Transaction:', transaction.getMembers);
   router.push('/home/confirm-transaction');
 };

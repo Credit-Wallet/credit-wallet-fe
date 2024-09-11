@@ -7,6 +7,7 @@ export const useTransactionStore = defineStore('transaction', {
     money: 0,
     description: '',
     members: [],
+    networkId: '',
   }),
   getters: {
     getMoney() {
@@ -18,11 +19,18 @@ export const useTransactionStore = defineStore('transaction', {
     getMembers() {
       return this.members;
     },
+    getNetworkId() {
+      return this.networkId;
+    }
   },
   actions: {
     setMoney(money, members) {
       this.money = formatMoneyToNumber(money);
       this.members = this.calculateMoneyDistribution(members, this.money);
+    },
+
+    setNetworkId(networkId) {
+      this.networkId = networkId;
     },
 
     recalculateMoneyWhenUpdateMoneyMember(money, id) {
@@ -68,7 +76,7 @@ export const useTransactionStore = defineStore('transaction', {
           return acc;
         }, 0);
         const remainingMoney = this.money - totalMoneyUpdated;
-        if (money > remainingMoney) {
+        if (money > remainingMoney || money < remainingMoney) {
           return true;
         }
       }

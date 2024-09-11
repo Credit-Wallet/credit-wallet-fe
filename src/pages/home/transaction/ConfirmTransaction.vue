@@ -1,13 +1,17 @@
 <script setup>
 import { useTransactionStore } from 'stores/transaction-store';
-import { CheckboxGroup, showFailToast } from 'vant';
+import { CheckboxGroup, showFailToast, showToast } from 'vant';
 import avatar from 'assets/images/avatar.jpeg';
 import { ref } from 'vue';
 import { formatMoney } from 'src/util/formatter';
 import DialogUpdateMoney from 'components/homes/transition/DialogUpdateMoney.vue';
+import TransactionAPI from 'app/api/transaction';
+import { useRouter } from 'vue-router';
 
 const showDialogUpdateMoney = ref(false);
 const memberUpdateMoney = ref(null);
+const description = ref(null);
+const router = useRouter();
 
 const transaction = useTransactionStore();
 const totalMoney = ref(transaction.getMoney);
@@ -26,9 +30,10 @@ const note = ref([
   'tiền nhậu',
   'tiền bún bò'
 ]);
+const formDescription = ref(null);
 
 const addNote = (note) => {
-  transaction.setDescription(note);
+  description.value = note;
 };
 
 const updateMoney = (member) => {
@@ -64,6 +69,46 @@ const updateSelectMember = (member) => {
     ...transaction.getMembers
   ];
 };
+
+const rules = {
+  description: [
+    {
+      required: true,
+      message: 'Mô tả là bắt buộc',
+    },
+  ],
+};
+
+const createTransaction = async () => {
+  formDescription.value.validate().then( async () => {
+    transaction.setDescription(description.value);
+    console.log('Create transaction');
+    const dataTransaction = {
+      amount: transaction.getMoney,
+      name: transaction.getDescription,
+      allMember: 0,
+      divideEqually: 0,
+      networkId: transaction.getNetworkId,
+      transactionDetails: transaction.getMembers.map((member) => {
+        if (member.selected) {
+          return {
+            accountId: member.id,
+            amount: member.money
+          }
+        }
+      })
+    };
+    await TransactionAPI.createTransaction(dataTransaction).then((response) => {
+      console.log('Create transaction success:', response);
+      router.push('/home/finish-transaction');
+    }).catch((error) => {
+      console.log('Create transaction failed:', error);
+      showToast('Gửi yêu cầu thất bại')
+    });
+  }).catch(() => {
+    showToast('Mô tả là bắt buộc');
+  });
+};
 </script>
 
 <template>
@@ -77,13 +122,17 @@ const updateSelectMember = (member) => {
         <van-divider dashed :style="{ color: '#1989fa', borderColor: '#1989fa'}" />
 <!--    Mô tả    -->
         <div>
-          <van-field
-            v-model="transaction.description"
-            label="Mô tả"
-            placeholder="Nhập mô tả"
-            clearable
-            autosize
-          />
+          <van-form :rules="rules" ref="formDescription">
+            <van-field
+              v-model="description"
+              label="Mô tả"
+              placeholder="Nhập mô tả"
+              clearable
+              autosize
+              required
+              :rules="rules.description"
+            />
+          </van-form>
         </div>
 
         <!-- Buttons (suggestions) -->
@@ -121,7 +170,7 @@ const updateSelectMember = (member) => {
     <div class="van-action-sheet__gap"></div>
 
     <div class="sticky-bottom-btn">
-      <van-button type="primary" round class="tw-w-full">Gửi yêu cầu</van-button>
+      <van-button type="primary" round class="tw-w-full" @click="createTransaction">Gửi yêu cầu</van-button>
     </div>
 
     <dialog-update-money

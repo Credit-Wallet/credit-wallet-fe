@@ -45,6 +45,12 @@ const routes: RouteRecordRaw[] = [
     props: { title: 'Xác nhận' },
     children: [{ path: '', component: () => import('pages/home/transaction/ConfirmTransaction.vue'), meta: { requiresAuth: true }}],
   },
+  {
+    path: '/home/finish-transaction',
+    component: () => import('layouts/NavbarLayout.vue'),
+    props: { title: 'Thành công', buttonLeft: false, rightText: 'Trang chủ', rightPath: '/'},
+    children: [{ path: '', component: () => import('pages/home/transaction/FinishTransaction.vue'), meta: { requiresAuth: true }}],
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

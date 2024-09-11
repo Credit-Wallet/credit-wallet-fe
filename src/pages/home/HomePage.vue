@@ -21,6 +21,7 @@ const account = useAccountStore();
 const fetchNetworks = async () => {
   await NetworkAPI.networksOfAccount().then((response) => {
     networks.addNetworks(response.result as Network[]);
+    networks.selectNetworkByAccount(account.getAccount as Account);
   }).catch((error) => {
     console.log('Fetch networks failed:', error);
   });
@@ -36,12 +37,12 @@ const fetchAccount = async () => {
 };
 
 onMounted(() => {
-  if (networks.networkCount === 0) {
-    fetchNetworks();
-  }
-
   if (Object.keys(account.getAccount).length === 0) {
     fetchAccount();
+  }
+
+  if (networks.networkCount === 0) {
+    fetchNetworks();
   }
 });
 </script>

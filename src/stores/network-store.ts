@@ -17,8 +17,10 @@ export const useNetworkStore = defineStore('networks', {
       this.networks.push(network);
     },
     addNetworks(networks: Network[]) {
-      this.selectedNetwork = networks[0];
       this.networks = networks;
+    },
+    selectNetworkByAccount(account: Account) {
+      this.selectedNetwork = this.networks.find((network: Network) => network.id === account.selectedNetworkId) as Network || this.networks[0];
     },
     addMembers(members: Account[]) {
       this.members = members

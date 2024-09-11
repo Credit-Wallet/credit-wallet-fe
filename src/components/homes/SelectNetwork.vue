@@ -8,6 +8,8 @@ const balance = ref(0)
 const sheetWallet = ref(false)
 const dialogCreateWallet = ref(false)
 const networks = useNetworkStore()
+
+console.log('networks 123:', networks.selectedNetwork);
 </script>
 
 <template>
