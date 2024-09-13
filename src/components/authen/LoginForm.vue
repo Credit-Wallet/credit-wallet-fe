@@ -10,14 +10,17 @@ const form = ref({
 });
 
 const $router = useRouter();
+const loading = ref(false);
 
 const onSubmit = async () => {
   try {
+    loading.value = true;
     const response = await AuthAPI.login({
       email: form.value.email,
       password: form.value.password,
     });
     localStorage.setItem('access_token', response.result?.token ?? '');
+    loading.value = false;
     await $router.push('/');
   } catch (error) {
     console.log('Login failed:', error);
@@ -54,7 +57,7 @@ const forgotPassword = () => {
       <van-checkbox v-model="form.rememberMe">Remember Me</van-checkbox>
       <span class="tw-text-primary text-weight-bold" @click="forgotPassword">Forgot Password</span>
     </div>
-    <van-button round block type="primary" native-type="submit" class="tw-mb-4">Login</van-button>
+    <van-button round block type="primary" native-type="submit" class="tw-mb-4" :loading="loading">Login</van-button>
   </van-form>
 </template>
 

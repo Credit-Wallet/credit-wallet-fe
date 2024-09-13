@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { formatMoney } from 'src/util/formatter';
 import { Network } from 'src/types/models/Network';
 import { ref } from 'vue';
 import { FormInstance } from 'vant';
+import { formatMoneyVant } from 'src/util/formatter';
 
 const form = defineModel('form', {
   type: Object,
   default: {
+    id: '',
     name: '',
-    maxRedundancy: '',
-    maxDebt: '',
+    minBalance: '',
+    maxBalance: '',
     maxMember: '',
-    typeMoney: '',
+    currency: '',
   } as Network,
 });
 const showPickerTypeMoney = ref(false);
@@ -51,25 +52,25 @@ defineExpose({
     <van-divider />
     <van-cell-group inset>
       <van-field
-        v-model="form.maxRedundancy"
+        v-model="form.maxBalance"
         name="Tối đa dư"
         label="Tối đa dư"
         placeholder="Tối đa dư"
         type="number"
-        :formatter="formatMoney"
         clearable
         :rules="[{ required: true, message: 'Tối đa dư là bắt buộc' }]"
+        :formatter="formatMoneyVant"
       />
     </van-cell-group>
     <van-divider />
     <van-cell-group inset>
       <van-field
-        v-model="form.maxDebt"
+        v-model="form.minBalance"
         name="Tối đa nợ"
         label="Tối đa nợ"
         placeholder="Tối đa nợ"
         type="number"
-        :formatter="formatMoney"
+        :formatter="formatMoneyVant"
         clearable
         :rules="[{ required: true, message: 'Tối đa nợ là bắt buộc' }]"
       />

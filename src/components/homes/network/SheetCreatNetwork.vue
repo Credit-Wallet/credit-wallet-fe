@@ -17,20 +17,20 @@ const formNetworkRef = ref<InstanceType<typeof FormNetwork> | null>()
 const form = ref<Network>({
   id: '',
   name: '',
-  maxRedundancy: '',
-  maxDebt: '',
+  minBalance: '',
+  maxBalance: '',
   maxMember: '',
-  typeMoney: '',
+  currency: '',
 });
 
 const resetForm = () => {
   form.value = {
     id: '',
     name: '',
-    maxRedundancy: '',
-    maxDebt: '',
+    minBalance: '',
+    maxBalance: '',
     maxMember: '',
-    typeMoney: '',
+    currency: '',
   };
 }
 
