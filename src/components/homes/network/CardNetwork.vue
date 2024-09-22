@@ -39,7 +39,7 @@ const selectNetwork = async (network) => {
       <template #title>
         <div class="tw-flex tw-justify-between">
           <span class="tw-text-base text-weight-bold">{{ network.name }}</span>
-          <q-icon name="edit" size="20px" @click="dialogEditWallet = true" />
+          <q-icon name="edit" size="20px" @click.stop="dialogEditWallet = true" />
         </div>
       </template>
 

@@ -20,10 +20,12 @@ const onSubmit = async () => {
       password: form.value.password,
     });
     localStorage.setItem('access_token', response.result?.token ?? '');
-    loading.value = false;
     await $router.push('/');
   } catch (error) {
     console.log('Login failed:', error);
+  }
+  finally {
+    loading.value = false;
   }
 }
 

@@ -31,9 +31,11 @@ const title = computed(
 
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header>
+    <q-header reveal>
       <van-nav-bar
         :title="title"
+        class="bg-gradient"
+        :border="false"
       />
     </q-header>
 
@@ -42,7 +44,7 @@ const title = computed(
     </q-page-container>
 
     <q-footer>
-      <van-tabbar v-model="active">
+      <van-tabbar reveal v-model="active">
         <van-tabbar-item icon="home-o" @click="$router.push('/')">{{ $t('home.title') }}</van-tabbar-item>
         <van-tabbar-item icon="notes-o" @click="$router.push('/history')">{{ $t('history.title') }}</van-tabbar-item>
         <van-tabbar-item icon="qr" @click="$router.push('/scan')">{{ $t('scan.title') }}</van-tabbar-item>
@@ -57,5 +59,8 @@ const title = computed(
 <style scoped>
 :deep(.q-layout__section--marginal) {
   background-color: transparent !important;
+}
+.bg-gradient {
+  background: linear-gradient(to right, rgba(142, 45, 226, 0.8), rgba(74, 0, 224, 0.8));
 }
 </style>

@@ -30,6 +30,7 @@ api.interceptors.response.use(
   response => response,
   error => {
     const router = useRouter(); // Get access to the Vue router
+    console.log('error', error);
 
     if (error.response && error.response.status === 401) {
       // Unauthorized response, possibly due to expired token
