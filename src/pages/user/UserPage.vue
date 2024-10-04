@@ -20,6 +20,7 @@ const handleSectionClick = (section) => {
 
 <template>
   <div>
+    test
     <!-- Top Section -->
     <div class="profile-header">
       <div class="profile-info">
