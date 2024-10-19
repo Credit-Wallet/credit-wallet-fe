@@ -13,13 +13,14 @@ const form = defineModel('form', {
     maxBalance: '',
     maxMember: '',
     currency: '',
+    description: ''
   } as Network,
 });
-const showPickerTypeMoney = ref(false);
+const showPickerCurrency = ref(false);
 const moneies = ref([
-  { text: 'VN', value: 'vn' },
-  { text: 'USD', value: 'usd' },
-  { text: 'EUR', value: 'eur' },
+  { text: 'VND', value: 'VND' },
+  { text: 'USD', value: 'USD' },
+  { text: 'EUR', value: 'EUR' },
 ]);
 const vanFormRef = ref<FormInstance | null>();
 
@@ -28,8 +29,8 @@ const onSubmit = () => {
 }
 
 const onConfirm = ({ selectedOptions }: { selectedOptions: { text: string }[] }) => {
-  form.value.typeMoney = selectedOptions[0]?.text;
-  showPickerTypeMoney.value = false;
+  form.value.currency = selectedOptions[0]?.text;
+  showPickerCurrency.value = false;
 };
 
 defineExpose({
@@ -47,6 +48,16 @@ defineExpose({
         placeholder="Tên"
         clearable
         :rules="[{ required: true, message: 'Tên là bắt buộc' }]"
+      />
+    </van-cell-group>
+    <van-cell-group inset>
+      <van-field
+        v-model="form.description"
+        name="Mô tả"
+        label="Mô tả"
+        placeholder="Mô tả"
+        clearable
+        :rules="[{ required: true, message: 'Mô tả là bắt buộc' }]"
       />
     </van-cell-group>
     <van-divider />
@@ -90,23 +101,23 @@ defineExpose({
     <van-divider />
     <van-cell-group inset>
       <van-field
-        v-model="form.typeMoney"
+        v-model="form.currency"
         is-link
         readonly
         name="Loại tiền"
         label="Loại tiền"
         placeholder="Chọn loại tiền"
-        @click="showPickerTypeMoney = true"
+        @click="showPickerCurrency = true"
         :rules="[{ required: true, message: 'Loại tiền là bắt buộc' }]"
       />
     </van-cell-group>
   </van-form>
 
-  <van-popup v-model:show="showPickerTypeMoney" position="bottom" clo>
+  <van-popup v-model:show="showPickerCurrency" position="bottom" clo>
     <van-picker
       :columns="moneies"
       @confirm="onConfirm"
-      @cancel="showPickerTypeMoney = false"
+      @cancel="showPickerCurrency = false"
     />
   </van-popup>
 </template>

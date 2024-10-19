@@ -2,38 +2,80 @@
 import { ref } from 'vue';
 
 defineOptions({
-  name: 'ScanPage'
+  name: 'ShopeePayUpdates'
 });
 
-const drawer = ref(false);
+const list = ref([]);
+const loading = ref(false);
+const finished = ref(false);
+const refreshing = ref(false);
+
+const onLoad = () => {
+  setTimeout(() => {
+    if (refreshing.value) {
+      list.value = [];
+      refreshing.value = false;
+    }
+
+    for (let i = 0; i < 10; i++) {
+      list.value.push(list.value.length + 1);
+    }
+    loading.value = false;
+
+    if (list.value.length >= 40) {
+      finished.value = true;
+    }
+  }, 1000);
+};
+
+const onRefresh = () => {
+  finished.value = false;
+  loading.value = true;
+  onLoad();
+};
 </script>
 
 <template>
-  <q-page-container class="bg-grey-3">
-    <q-page>
-      <q-page-sticky position="top">
-        <q-toolbar>
-          <q-btn flat round dense icon="menu" @click="drawer = true" />
-          <q-toolbar-title>
-            {{ $t('notification.title') }}
-          </q-toolbar-title>
-        </q-toolbar>
-      </q-page-sticky>
-
-      <q-page-container>
-        <q-card>
-          <q-card-section>
-            <q-img src="https://cdn.quasar.dev/img/parallax1.jpg" />
-          </q-card-section>
-          <q-card-section>
-            <q-btn label="Notification" color="primary" />
-          </q-card-section>
-        </q-card>
-      </q-page-container>
-    </q-page>
-  </q-page-container>
+  <q-page>
+    <div>
+      <van-cell-group>
+        <van-cell title="Cập nhật ShopeePay">
+          <template #right-icon>
+            <span>Đọc tất cả</span>
+          </template>
+        </van-cell>
+        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+          <van-list
+            v-model:loading="loading"
+            :finished="finished"
+            finished-text="Finished"
+            @load="onLoad"
+            class="tw-h-[83vh] tw-overflow-y-auto"
+          >
+            <van-cell
+              v-for="item in list"
+              :key="item" :title="item"
+            >
+              <template #right-icon>
+                <span>12:00</span>
+              </template>
+            </van-cell>
+          </van-list>
+        </van-pull-refresh>
+      </van-cell-group>
+    </div>
+  </q-page>
+<!--  <van-cell-->
+<!--    v-for="(update, index) in shopeePayUpdates"-->
+<!--    :key="index"-->
+<!--    :title="update.title"-->
+<!--    :label="update.content"-->
+<!--  >-->
+<!--    <template #right-icon>-->
+<!--      <span>{{ update.timestamp }}</span>-->
+<!--    </template>-->
+<!--  </van-cell>-->
 </template>
 
 <style scoped>
-
 </style>

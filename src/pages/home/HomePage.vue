@@ -19,9 +19,12 @@ defineOptions({
 const networks = useNetworkStore();
 const account = useAccountStore();
 const isLoading = ref(false);
+const refreshing = ref(false);
 
 const fetchAccountAndNetwork = async () => {
   isLoading.value = true;
+  console.log(1);
+  account.clearAccount();
   await AccountAPI.getProfile().then((response) => {
     account.setAccount(response.result as Account);
     console.log('Account:', account.getAccount);
@@ -29,6 +32,7 @@ const fetchAccountAndNetwork = async () => {
     console.log('Fetch account failed:', error);
   });
 
+  networks.clearNetworks();
   await NetworkAPI.networksOfAccount().then((response) => {
     networks.addNetworks(response.result as Network[]);
     networks.selectNetworkByAccount(account.getAccount as Account);
@@ -36,6 +40,12 @@ const fetchAccountAndNetwork = async () => {
     console.log('Fetch networks failed:', error);
   });
   isLoading.value = false;
+};
+
+const onRefresh = async () => {
+  refreshing.value = true;
+  await fetchAccountAndNetwork();
+  refreshing.value = false;
 };
 
 onMounted(() => {
@@ -49,24 +59,26 @@ onMounted(() => {
   <q-page>
     <loading-page v-if="isLoading" />
     <div v-else>
-      <div v-if="networks.networkCount === 0" class="tw-p-4">
-        <EmptyNetwork />
-      </div>
-
-      <div v-else>
-        <van-search
-          shape="round"
-          placeholder="Tìm kiếm"
-        />
-
-        <div class="tw-p-4">
-          <SelectNetwork />
-
-          <ActionNetwork />
-
-          <ListMember class="tw-mt-4" />
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <div v-if="networks.networkCount === 0" class="tw-p-4">
+          <EmptyNetwork />
         </div>
-      </div>
+
+        <div v-else>
+          <van-search
+            shape="round"
+            placeholder="Tìm kiếm"
+          />
+
+          <div class="tw-p-4 tw-h-[83vh]">
+            <SelectNetwork />
+
+            <ActionNetwork />
+
+            <ListMember class="tw-mt-4" />
+          </div>
+        </div>
+      </van-pull-refresh>
     </div>
   </q-page>
 </template>

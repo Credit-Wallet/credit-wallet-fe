@@ -1,10 +1,9 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import AccountAPI from 'app/api/account';
 import { useNetworkStore } from 'stores/network-store';
 import avatar from 'assets/images/avatar.jpeg';
 
-// const list = ref<number[]>([]);
 const loading = ref(false);
 const finished = ref(false);
 const networks = useNetworkStore();
@@ -17,16 +16,14 @@ const fetchMembers = async (networkId) => {
   });
 };
 
-onMounted(
-  () => {
-    if (networks.countMembers === 0) {
-      fetchMembers(networks.selectedNetwork.id).then(() => {
-        loading.value = false;
-        finished.value = true;
-      });
-    }
-  }
-);
+const onLoad = async () => {
+  finished.value = false;
+  loading.value = true;
+  await fetchMembers(networks.selectedNetwork.id);
+  loading.value = false;
+  finished.value = true;
+};
+
 </script>
 
 <template>
@@ -40,6 +37,7 @@ onMounted(
         v-model:loading="loading"
         :finished="finished"
         finished-text="Finished"
+        @load="onLoad"
       >
         <div v-for="(member, index) in networks.members" :key="index" class="tw-flex tw-items-center tw-py-2">
           <van-image

@@ -30,6 +30,9 @@ export const useNetworkStore = defineStore('networks', {
     },
     resetMembers() {
       this.members = [];
+    },
+    clearNetworks() {
+      this.networks = [];
     }
   },
 });

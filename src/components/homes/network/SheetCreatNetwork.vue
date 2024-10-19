@@ -5,6 +5,7 @@ import { useNetworkStore } from 'stores/network-store';
 import { Network } from 'src/types/models/Network';
 import { showSuccessToast } from 'vant';
 import NetworkAPI from 'app/api/network';
+import { formatMoneyToNumber } from 'src/util/formatter';
 
 const networks = useNetworkStore()
 
@@ -20,7 +21,8 @@ const form = ref<Network>({
   minBalance: '',
   maxBalance: '',
   maxMember: '',
-  currency: '',
+  description: '',
+  currency: ''
 });
 
 const resetForm = () => {
@@ -30,13 +32,18 @@ const resetForm = () => {
     minBalance: '',
     maxBalance: '',
     maxMember: '',
+    description: '',
     currency: '',
   };
 }
 
 const createNetwork = async () => {
   try {
-    const response = await NetworkAPI.add(form.value);
+    // convert 200,000 to 200000
+    let formData = form.value;
+    formData.minBalance = formatMoneyToNumber(form.value.minBalance);
+    formData.maxBalance = formatMoneyToNumber(form.value.maxBalance);
+    const response = await NetworkAPI.add(formData);
     networks.addNetwork(response.result as Network)
     showSuccessToast('Tạo mạng thành công')
     showSheet.value = false

@@ -1,44 +1,29 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import ListBill from 'components/histories/ListBill.vue';
+import ListTransaction from 'components/histories/ListTransaction.vue';
 
 defineOptions({
   name: 'HistoryPage'
 });
 
-const drawer = ref(false);
-const items = ref([
-  { id: 1, name: 'Item 1', description: 'Description 1', date: '2021-10-01' },
-  { id: 2, name: 'Item 2', description: 'Description 2', date: '2021-10-02' },
-  { id: 3, name: 'Item 3', description: 'Description 3', date: '2021-10-03' },
-  { id: 4, name: 'Item 4', description: 'Description 4', date: '2021-10-04' },
-  { id: 5, name: 'Item 5', description: 'Description 5', date: '2021-10-05' },
-]);
+const active = ref(0);
 </script>
 
 <template>
   <q-page>
-    <q-page-sticky position="top">
-      <q-toolbar>
-        <q-btn flat round dense icon="menu" @click="drawer = true" />
-        <q-toolbar-title>
-          {{ $t('history.title') }}
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-page-sticky>
-
-    <q-page-container>
-      <q-list>
-        <q-item v-for="item in items" :key="item.id">
-          <q-item-section>
-            <q-item-label>{{ item.name }}</q-item-label>
-            <q-item-label caption>{{ item.description }}</q-item-label>
-          </q-item-section>
-          <q-item-section side>
-            <q-item-label caption>{{ item.date }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-page-container>
+    <van-tabs v-model:active="active">
+      <van-tab :title="'Yêu cầu'">
+        <template #default>
+            <list-bill />
+        </template>
+      </van-tab>
+      <van-tab :title="'Giao dịch'">
+        <template #default>
+            <list-transaction />
+        </template>
+      </van-tab>
+    </van-tabs>
   </q-page>
 </template>
 

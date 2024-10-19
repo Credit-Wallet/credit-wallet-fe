@@ -14,6 +14,12 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('pages/history/HistoryPage.vue'), meta: { requiresAuth: true }}],
   },
   {
+    path: '/history/bill/:id',
+    component: () => import('layouts/NavbarLayout.vue'),
+    props: { title: 'Chi tiết yêu cầu' },
+    children: [{ path: '', component: () => import('components/histories/DetailBill.vue'), meta: { requiresAuth: true }}],
+  },
+  {
     path: '/scan',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/scan/ScanPage.vue'), meta: { requiresAuth: true }}],
@@ -27,6 +33,12 @@ const routes: RouteRecordRaw[] = [
     path: '/user',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/user/UserPage.vue'), meta: { requiresAuth: true }}],
+  },
+  {
+    path: '/user/profile',
+    component: () => import('layouts/NavbarLayout.vue'),
+    props: { title: 'Hồ sơ' },
+    children: [{ path: '', component: () => import('components/user/ProfileUser.vue'), meta: { requiresAuth: true }}],
   },
   {
     path: '/login',

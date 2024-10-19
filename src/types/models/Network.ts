@@ -5,6 +5,7 @@ type Network = {
   maxBalance: '',
   maxMember: '',
   currency: '',
+  description: '',
 };
 
 export type { Network };

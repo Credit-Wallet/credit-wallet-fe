@@ -1,20 +1,37 @@
 <script setup>
 import { ref } from 'vue';
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 import avatar from 'assets/images/avatar.jpeg';
+import { useRouter } from 'vue-router';
 
 const userName = ref('phanhoaian09006@gmail.com');
 const isVerified = ref(true);
+const router = useRouter();
 
 const sections = ref([
-  { icon: 'user-o', text: 'Hồ sơ' },
-  { icon: 'orders-o', text: 'Dịch vụ' },
-  { icon: 'setting-o', text: 'Cài đặt' },
-  { icon: 'question-o', text: 'Trung tâm trợ giúp' },
+  { id: 1, icon: 'user-o', text: 'Hồ sơ' },
+  { id: 2, icon: 'orders-o', text: 'Dịch vụ' },
+  { id: 3, icon: 'setting-o', text: 'Cài đặt' },
+  { id: 4, icon: 'question-o', text: 'Trung tâm trợ giúp' },
 ]);
 
 const handleSectionClick = (section) => {
-  Toast(`Clicked on ${section.text}`);
+  switch (section.id) {
+    case 1:
+      router.push('/user/profile');
+      break;
+    case 2:
+      showToast('Đang phát triển...');
+      break;
+    case 3:
+      showToast('Đang phát triển...');
+      break;
+    case 4:
+      showToast('Đang phát triển...');
+      break;
+    default:
+      break;
+  }
 };
 </script>
 

@@ -5,7 +5,7 @@ import avatar from 'assets/images/avatar.jpeg';
 import { ref } from 'vue';
 import { formatMoney } from 'src/util/formatter';
 import DialogUpdateMoney from 'components/homes/transition/DialogUpdateMoney.vue';
-import TransactionAPI from 'app/api/transaction';
+import BillAPI from 'app/api/bill';
 import { useRouter } from 'vue-router';
 
 const showDialogUpdateMoney = ref(false);
@@ -83,13 +83,11 @@ const createTransaction = async () => {
   formDescription.value.validate().then( async () => {
     transaction.setDescription(description.value);
     console.log('Create transaction');
-    const dataTransaction = {
+    const dataBill = {
       amount: transaction.getMoney,
       name: transaction.getDescription,
-      allMember: 0,
-      divideEqually: 0,
       networkId: transaction.getNetworkId,
-      transactionDetails: transaction.getMembers.map((member) => {
+      billRequests: transaction.getMembers.map((member) => {
         if (member.selected) {
           return {
             accountId: member.id,
@@ -98,8 +96,8 @@ const createTransaction = async () => {
         }
       })
     };
-    await TransactionAPI.createTransaction(dataTransaction).then((response) => {
-      console.log('Create transaction success:', response);
+    await BillAPI.createBill(dataBill).then((response) => {
+      console.log('Create dataBill success:', response);
       router.push('/home/finish-transaction');
     }).catch((error) => {
       console.log('Create transaction failed:', error);
