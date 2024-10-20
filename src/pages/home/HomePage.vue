@@ -1,15 +1,13 @@
-<script setup lang="ts">
+<script setup>
 import SelectNetwork from 'components/homes/SelectNetwork.vue';
 import ActionNetwork from 'components/homes/ActionNetwork.vue';
 import EmptyNetwork from 'components/homes/EmptyNetwork.vue';
 import { useNetworkStore } from 'stores/network-store';
 import ListMember from 'components/homes/network/ListMember.vue';
 import NetworkAPI from 'app/api/network';
-import { Network } from 'src/types/models/Network';
 import { onMounted, ref } from 'vue';
 import { useAccountStore } from 'stores/account-store';
 import AccountAPI from 'app/api/account';
-import { Account } from 'src/types/models/Account';
 import LoadingPage from 'pages/LoadingPage.vue';
 
 defineOptions({
@@ -26,7 +24,7 @@ const fetchAccountAndNetwork = async () => {
   console.log(1);
   account.clearAccount();
   await AccountAPI.getProfile().then((response) => {
-    account.setAccount(response.result as Account);
+    account.setAccount(response.result);
     console.log('Account:', account.getAccount);
   }).catch((error) => {
     console.log('Fetch account failed:', error);
@@ -34,8 +32,8 @@ const fetchAccountAndNetwork = async () => {
 
   networks.clearNetworks();
   await NetworkAPI.networksOfAccount().then((response) => {
-    networks.addNetworks(response.result as Network[]);
-    networks.selectNetworkByAccount(account.getAccount as Account);
+    networks.addNetworks(response.result);
+    networks.selectNetworkByAccount(account.getAccount);
   }).catch((error) => {
     console.log('Fetch networks failed:', error);
   });

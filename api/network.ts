@@ -1,10 +1,10 @@
 import { BaseApi } from 'app/api/base';
 import { ApiResponse } from 'src/types/response/ApiResponse';
-import { Network } from 'src/types/models/Network';
+import { AddNetwork } from 'src/types/requests/AddNetwork';
 
 export class NetworkAPI extends BaseApi {
-  add(data: Network): Promise<ApiResponse> {
-    return this.post<Network>('/networks', data)
+  add(data: AddNetwork): Promise<ApiResponse> {
+    return this.post<AddNetwork>('/networks', data)
   }
 
   qrJoin(data: { id: string }): Promise<ApiResponse> {

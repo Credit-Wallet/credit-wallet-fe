@@ -40,9 +40,11 @@ const resetForm = () => {
 const createNetwork = async () => {
   try {
     // convert 200,000 to 200000
-    let formData = form.value;
-    formData.minBalance = formatMoneyToNumber(form.value.minBalance);
-    formData.maxBalance = formatMoneyToNumber(form.value.maxBalance);
+    let formData = {
+      ...form.value,
+      minBalance: formatMoneyToNumber(form.value.minBalance),
+      maxBalance: formatMoneyToNumber(form.value.maxBalance)
+    };
     const response = await NetworkAPI.add(formData);
     networks.addNetwork(response.result as Network)
     showSuccessToast('Tạo mạng thành công')
