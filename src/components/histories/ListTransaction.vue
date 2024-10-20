@@ -66,8 +66,8 @@ const onRefresh = () => {
           </div>
           <div class="transaction-content">
             <div class="transaction-title tw-flex tw-justify-between">
-              <span>Người gửi: {{ item.fromAccountId }}</span>
-              <span>Người nhận: {{ item.toAccountId }}</span>
+              <span>Người gửi: {{ item?.fromAccount.username }}</span>
+              <span>Người nhận: {{ item?.toAccount.username }}</span>
             </div>
             <div class="transaction-description">{{ item.description }}</div>
             <div class="transaction-amount tw-flex tw-justify-between">

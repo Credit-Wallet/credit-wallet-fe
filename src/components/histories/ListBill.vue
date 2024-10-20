@@ -50,10 +50,10 @@ const onRefresh = () => {
   onLoad();
 };
 
-const cancelBill = async (billId) => {
+const cancelBill = async (dataBill) => {
   try {
-    await BillAPI.cancelBill(billId);
-    list.value = list.value.filter((bill) => bill.id !== billId);
+    await BillAPI.cancelBill(dataBill.id, dataBill);
+    list.value = list.value.filter((bill) => bill.id !== dataBill.id);
   } catch (error) {
     console.log('Cancel bill failed:', error);
   }
@@ -99,7 +99,7 @@ const confirmBill = async (billId) => {
 
         <template #right>
           <van-button square text="Xác nhận" type="success" class="delete-button" style="height: 100%;" @click="confirmBill(item.id)" :disabled="item.status == 'COMPLETED' || item.status == 'CANCELLED'" />
-          <van-button square text="Hủy" type="danger" class="delete-button" style="height: 100%;" @click="cancelBill(item.id)" :disabled="item.status == 'COMPLETED' || item.status == 'CANCELLED'" />
+          <van-button square text="Hủy" type="danger" class="delete-button" style="height: 100%;" @click="cancelBill(item)" :disabled="item.status == 'COMPLETED' || item.status == 'CANCELLED'" />
         </template>
       </van-swipe-cell>
     </van-list>

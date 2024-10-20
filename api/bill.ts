@@ -13,8 +13,8 @@ export class BillAPI extends BaseApi {
   }
 
   //cancelBill
-  public async cancelBill(id: string): Promise<ApiResponse> {
-    return this.delete(`/bills/${id}`);
+  public async cancelBill(id: string, data: CreateBill): Promise<CreateBill> {
+    return this.put(`/bills/${id}/cancel-bill-request`, data);
   }
 
   //confirmBill
