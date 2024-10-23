@@ -11,6 +11,10 @@ export class AuthAPI extends BaseApi {
   public async login(data: Login): Promise<ApiResponse> {
     return this.post('/auth/login', data)
   }
+
+  public async logout(): Promise<ApiResponse> {
+    return this.post('/auth/logout')
+  }
 }
 
 export default new AuthAPI();

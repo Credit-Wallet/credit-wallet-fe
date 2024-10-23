@@ -31,7 +31,7 @@ const isLogin = ref(true);
       </p>
       <p class="tw-text-center tw-text-gray-600" v-else>
         Already have an account ?
-        <span class="tw-text-primary text-weight-bold">
+        <span class="tw-text-primary text-weight-bold" @click="isLogin = true">
           Login
         </span>
       </p>
