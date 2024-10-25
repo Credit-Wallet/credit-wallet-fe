@@ -20,7 +20,9 @@ export default boot(() => {
 
   // Get FCM Token
   getToken(messaging, { vapidKey: 'BObKM0eVy8drvHZ-37B7rZlstO0T_o3VDtpFBKnVTkhAOjOWUlKOqB8hFuomtEIrQ0R72jX-P0p5jw5sAunCpFw' }).then((token) => {
-    console.log('FCM Token:', token)
+    if (token) {
+      localStorage.setItem('fcm_token', token) // Store FCM token in localStorage
+    }
   }).catch((err) => {
     console.error('Unable to get FCM Token', err)
   })

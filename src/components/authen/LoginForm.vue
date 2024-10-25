@@ -21,6 +21,16 @@ const onSubmit = async () => {
       password: form.value.password,
     });
     localStorage.setItem('access_token', response.result?.token ?? '');
+
+    // Retrieve FCM token from localStorage
+    const token = localStorage.getItem('fcm_token');
+
+    // Save FCM token to the backend if available
+    if (token) {
+      console.log('FCM Token:', token);
+      await AuthAPI.saveFcmToken(token).then(r => console.log(r));
+      console.log('FCM Token saved successfully');
+    }
     await $router.push('/');
   } catch (error) {
     console.log('Login failed:', error);
