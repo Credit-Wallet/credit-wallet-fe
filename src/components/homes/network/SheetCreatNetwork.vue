@@ -14,6 +14,7 @@ const showSheet = defineModel<boolean>('showSheet', {
   default: false
 });
 const formNetworkRef = ref<InstanceType<typeof FormNetwork> | null>()
+const emit = defineEmits(['createNetwork'])
 
 const form = ref<Network>({
   id: '',
@@ -50,6 +51,7 @@ const createNetwork = async () => {
     showSuccessToast('Tạo mạng thành công')
     showSheet.value = false
     resetForm()
+    emit('createNetwork')
   } catch (error) {
     console.log('Create network failed:', error);
   }

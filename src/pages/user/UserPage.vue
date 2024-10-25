@@ -24,7 +24,7 @@ const handleSectionClick = (section) => {
       showToast('Đang phát triển...');
       break;
     case 3:
-      showToast('Đang phát triển...');
+      router.push('/user/settings');
       break;
     case 4:
       showToast('Đang phát triển...');

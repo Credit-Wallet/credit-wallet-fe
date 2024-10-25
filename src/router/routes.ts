@@ -41,6 +41,12 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('components/user/ProfileUser.vue'), meta: { requiresAuth: true }}],
   },
   {
+    path: '/user/settings',
+    component: () => import('layouts/NavbarLayout.vue'),
+    props: { title: 'Cài đặt' },
+    children: [{ path: '', component: () => import('components/user/SettingUser.vue'), meta: { requiresAuth: true }}],
+  },
+  {
     path: '/login',
     component: () => import('layouts/AuthenLayout.vue'),
     children: [{ path: '', component: () => import('pages/LoginPage.vue')}],

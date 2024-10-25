@@ -1,6 +1,5 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
-import { useRouter } from 'vue-router';
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -29,14 +28,10 @@ api.interceptors.request.use(config => {
 api.interceptors.response.use(
   response => response,
   error => {
-    const router = useRouter(); // Get access to the Vue router
-    console.log('error', error);
-
-    if (error.response && error.response.status === 401) {
+    console.log('error axios.ts', error);
       // Unauthorized response, possibly due to expired token
-      localStorage.removeItem('access_token'); // Clear the token
-      router.push('/login'); // Redirect to login page
-    }
+    localStorage.removeItem('access_token'); // Clear the token
+    window.location.href = '/#/login'; // Redirect to login page
 
     return Promise.reject(error); // Propagate the error
   }

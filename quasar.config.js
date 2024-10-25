@@ -24,6 +24,8 @@ module.exports = configure(function (/* ctx */) {
       'i18n',
       'axios',
       'vant',
+      'firebase',
+      'registerServiceWorker'
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -96,10 +98,18 @@ module.exports = configure(function (/* ctx */) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
-      // https: true
-      open: true, // opens browser window automatically,
-      https: true, // Bật HTTPS
-      port: 9500, // Hoặc bất kỳ cổng nào bạn muốn
+      port: 9500,
+      https: true,
+      server: {
+        type: 'https', // NECESSARY (alternative is type 'http')
+
+        options: {
+          // Use ABSOLUTE paths or path.join(__dirname, 'root/relative/path')
+          key: 'key.key',
+          cert: 'cert.crt',
+          passphrase: 'webpack-dev-server' // do you need it?
+        }
+      }
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework

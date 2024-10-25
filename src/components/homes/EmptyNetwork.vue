@@ -3,7 +3,12 @@ import shield from 'assets/images/shield.jpg';
 import { ref } from 'vue';
 import SheetCreatNetwork from 'components/homes/network/SheetCreatNetwork.vue';
 
+const emit = defineEmits(['createNetwork']);
 const sheetCreateNetwork = ref(false);
+
+const emitCreateNetwork = () => {
+  emit('createNetwork');
+};
 </script>
 
 <template>
@@ -52,7 +57,7 @@ const sheetCreateNetwork = ref(false);
     </van-col>
   </van-row>
 
-  <sheet-creat-network v-model:showSheet="sheetCreateNetwork" />
+  <sheet-creat-network v-model:showSheet="sheetCreateNetwork" @create-network="emitCreateNetwork" />
 </template>
 
 <style scoped>

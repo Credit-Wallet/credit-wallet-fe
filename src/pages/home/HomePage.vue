@@ -59,7 +59,7 @@ onMounted(() => {
     <div v-else>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <div v-if="networks.networkCount === 0" class="tw-p-4">
-          <EmptyNetwork />
+          <EmptyNetwork @create-network="onRefresh" />
         </div>
 
         <div v-else>

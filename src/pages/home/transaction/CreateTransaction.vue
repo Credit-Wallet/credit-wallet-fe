@@ -6,14 +6,15 @@ import AccountAPI from 'app/api/account';
 import { useAccountStore } from 'stores/account-store';
 import { useTransactionStore } from 'stores/transaction-store';
 import { useRouter } from 'vue-router';
-import { formatMoneyVant } from 'src/util/formatter';
+import { formatMoneyToNumber, formatMoneyVant } from 'src/util/formatter';
+import { showToast } from 'vant';
 
 const networks = useNetworkStore();
 const account = useAccountStore();
 const transaction = useTransactionStore();
 const router = useRouter();
-
 const money = ref(null);
+const form = ref(null);
 
 const listSelectedTransaction = ref([
   {
@@ -25,8 +26,6 @@ const listSelectedTransaction = ref([
     isSelf: true,
   }
 ]);
-
-console.log('List selected transaction:', listSelectedTransaction.value);
 
 const fetchMembers = async (networkId) => {
   await AccountAPI.getAccountsByNetworkId({ networkId: networkId}).then((response) => {
@@ -48,10 +47,8 @@ const members = ref(networks.members.map((member) => {
 }));
 
 const selectMember = (member) => {
-  console.log('Select member:', member);
   member.selected = !member.selected
   if (member.selected) {
-    console.log('member');
     listSelectedTransaction.value.push(member);
   } else {
     removeMember(member);
@@ -69,11 +66,22 @@ const removeMember = (member) => {
 };
 
 const continueTransaction = () => {
-  console.log('Continue transaction');
-  transaction.setMoney(money.value, listSelectedTransaction.value);
-  transaction.setNetworkId(networks.selectedNetwork.id);
-  console.log('Transaction:', transaction.getMembers);
-  router.push('/home/confirm-transaction');
+  form.value.validate().then(() => {
+    if (listSelectedTransaction.value.length < 2) {
+      showToast('Vui lòng chọn ít nhất 2 thành viên');
+      return;
+    }
+
+    transaction.setMoney(money.value, listSelectedTransaction.value);
+    transaction.setNetworkId(networks.selectedNetwork.id);
+    router.push('/home/confirm-transaction');
+  }).catch(() => {
+    showToast('Vui lòng nhập số tiền');
+  });
+};
+
+const onFailed = (error) => {
+  console.log('Failed:', error);
 };
 
 onMounted(
@@ -94,22 +102,28 @@ onMounted(
   <div class="tw-mx-3">
     <div class="van-card">
       <div class="van-card__content cart_content_money">
-        <van-field
-          v-model="money"
-          label="Số tiền"
-          placeholder="Nhập số tiền"
-          type="number"
-          input-align="right"
-          clearable
-          :formatter="formatMoneyVant"
-        />
+        <van-form @failed="onFailed" ref="form">
+          <van-field
+            v-model="money"
+            label="Số tiền"
+            placeholder="Nhập số tiền"
+            type="number"
+            input-align="right"
+            clearable
+            required
+            :formatter="formatMoneyVant"
+            :rules="[{ required: true, message: 'Vui lòng nhập số tiền' },
+              { validator: (value) => formatMoneyToNumber(value) > 0, message: 'Số tiền phải lớn hơn 0' },
+              { validator: (value) => formatMoneyToNumber(value) <= 1000000000, message: 'Số tiền phải nhỏ hơn hoặc bằng 100,000,000' }]"
+          />
+        </van-form>
       </div>
     </div>
 
     <div class="van-card">
       <div class="van-card__header">
         <div class="van-card__title tw-w-full tw-flex tw-justify-between">
-            <span class="tw-text-base tw-ml-2 tw-mt-1">Danh sách chia tiền (1)</span>
+            <span class="tw-text-base tw-ml-2 tw-mt-1">Danh sách chia tiền ({{ listSelectedTransaction.length }})</span>
             <span class="tw-text-base tw-ml-2 tw-mt-1">Bỏ chọn tất cả</span>
         </div>
       </div>

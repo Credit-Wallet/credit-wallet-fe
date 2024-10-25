@@ -103,7 +103,7 @@ const forgotPassword = () => {
     />
     <div class="tw-flex tw-justify-between tw-items-center tw-mb-6">
       <van-checkbox v-model="form.rememberMe">Remember Me</van-checkbox>
-      <span class="tw-text-primary text-weight-bold" @click="forgotPassword">Forgot Password</span>
+      <span class="tw-text-primary text-weight-bold" @click="forgotPassword"></span>
     </div>
     <van-button round block type="primary" native-type="submit" class="tw-mb-4">Sign Up</van-button>
   </van-form>

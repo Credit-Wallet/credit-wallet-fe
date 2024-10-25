@@ -63,7 +63,7 @@ onMounted(() => {
               <van-icon name="balance-o" class="icon-style" />
             </div>
             <div class="transaction-content">
-              <div class="transaction-title">Tên: accout name</div>
+              <div class="transaction-title">Tên: {{ item.account?.username }}</div>
               <div class="transaction-description">{{ item.description }}</div>
               <div class="transaction-amount tw-flex tw-justify-between">
                 <span>Số tiền: {{ formatMoney(item.amount) }}</span>
