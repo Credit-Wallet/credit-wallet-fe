@@ -25,7 +25,6 @@ const fetchAccountAndNetwork = async () => {
   account.clearAccount();
   await AccountAPI.getProfile().then((response) => {
     account.setAccount(response.result);
-    console.log('Account:', account.getAccount);
   }).catch((error) => {
     console.log('Fetch account failed:', error);
   });
@@ -37,6 +36,7 @@ const fetchAccountAndNetwork = async () => {
   }).catch((error) => {
     console.log('Fetch networks failed:', error);
   });
+
   isLoading.value = false;
 };
 

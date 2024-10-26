@@ -172,11 +172,6 @@
     untildify "^4.0.0"
     wrap-ansi "^7.0.0"
 
-"@jcesarmobile/ssl-skip@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@jcesarmobile/ssl-skip/-/ssl-skip-0.2.0.tgz#c621ddcbf285bd4eef679545ae41a260aa0d698f"
-  integrity sha512-hkhOM5+qPm5xzOYcbUODzYTZKyATEM3qixzUL1gJsJckZ5wAUQxyZJFM3hcUANv8fV8cONfX7A+d/DJpzVvM+Q==
-
 "@types/fs-extra@^8.0.0":
   version "8.1.5"
   resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-8.1.5.tgz#33aae2962d3b3ec9219b5aca2555ee00274f5927"

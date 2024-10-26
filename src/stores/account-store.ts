@@ -5,6 +5,9 @@ export const useAccountStore = defineStore('account', {
   state: () => ({
     account: {} as Account,
   }),
+  getters: {
+    getAccount: (state) => state.account,
+  },
   actions: {
     setAccount(account: Account) {
       Object.assign(this.account, account);
@@ -12,8 +15,5 @@ export const useAccountStore = defineStore('account', {
     clearAccount() {
       this.account = {} as Account;
     },
-    getAccount() {
-      return this.account;
-    }
   },
 });

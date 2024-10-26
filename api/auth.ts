@@ -18,7 +18,7 @@ export class AuthAPI extends BaseApi {
 
   //save fcm token
   public async saveFcmToken(token: string): Promise<ApiResponse> {
-    return this.post('/auth/fcm-token', token)
+    return this.post('/auth/fcm-token', { token })
   }
 }
 

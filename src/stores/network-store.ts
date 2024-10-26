@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { Network } from 'src/types/models/Network';
 import { Account } from 'src/types/models/Account';
+import AccountAPI from 'app/api/account';
 
 export const useNetworkStore = defineStore('networks', {
   state: () => ({
@@ -11,6 +12,7 @@ export const useNetworkStore = defineStore('networks', {
   getters: {
     networkCount: (state) => state.networks.length,
     countMembers: (state) => state.members.length,
+    getSelectedNetwork: (state) => state.selectedNetwork,
   },
   actions: {
     addNetwork(network : Network) {
@@ -21,6 +23,9 @@ export const useNetworkStore = defineStore('networks', {
     },
     selectNetworkByAccount(account: Account) {
       this.selectedNetwork = this.networks.find((network: Network) => network.id === account.selectedNetworkId) as Network || this.networks[0];
+
+      const selectedNetworkId = Number(account.selectedNetworkId);
+      AccountAPI.selectedNetwork(selectedNetworkId ?? null);
     },
     addMembers(members: Account[]) {
       this.members = members
