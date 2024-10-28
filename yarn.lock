@@ -35,6 +35,11 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.24.7.tgz#9a5226f92f0c5c8ead550b750f5608e766c8ce85"
   integrity sha512-9uUYRm6OqQrCqQdG1iCBwBPZgN8ciDBro2nIOFaiRz1/BCxaI7CNvQbDHvsArAC7Tw9Hda/B3U+6ui9u4HWXPw==
 
+"@capacitor/android@^3.9.0":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-3.9.0.tgz#73032c49e0d6cdb4bdd1c01565e28f3913f25fee"
+  integrity sha512-YTPyrh1NozEuYXWGtfqN27TLXUrLbZX9fggyd4JQ1yMaUZTmLPm5dCuznONhQ49aPkJnUJB02JfpHy/qGwa2Lw==
+
 "@capacitor/camera@^6.0.2":
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-6.0.2.tgz#353374f83a64b66b8b474a04d5e8167d680490ef"
@@ -63,6 +68,18 @@
     tar "^6.1.11"
     tslib "^2.4.0"
     xml2js "^0.5.0"
+
+"@capacitor/core@^6.1.2":
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-6.1.2.tgz#a072e78b46693a6a47047cfc90d5f7cc48299fe9"
+  integrity sha512-xFy1/4qLFLp5WCIzIhtwUuVNNoz36+V7/BzHmLqgVJcvotc4MMjswW/TshnPQaLLujEOaLkA4h8ZJ0uoK3ImGg==
+  dependencies:
+    tslib "^2.1.0"
+
+"@capacitor/push-notifications@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/push-notifications/-/push-notifications-6.0.2.tgz#1ad4a6eddfed4615f29d4b9d877cb99d489b3b09"
+  integrity sha512-VYo8h+Dfw7B/JtsQCCnSKi34jr3oN9LacwmgCqwi3KPIE/sKID75lTEACZBQQ6c4rPct0yRQ0ihHdK/OPXl3Tw==
 
 "@esbuild/linux-loong64@0.14.54":
   version "0.14.54"

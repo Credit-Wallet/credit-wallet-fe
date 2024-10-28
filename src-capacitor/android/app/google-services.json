@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "878396231145",
+    "project_id": "friendspay-dd09b",
+    "storage_bucket": "friendspay-dd09b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878396231145:android:942caa6b5bce4730120f78",
+        "android_client_info": {
+          "package_name": "com.friendpay.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVHCASb7wNWP5crPvVVWToR1hHRfdoy7g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

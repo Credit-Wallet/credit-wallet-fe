@@ -1,5 +1,14 @@
 {
   "appId": "com.friendpay.app",
   "appName": "Friends Pay",
-  "webDir": "www"
+  "webDir": "www",
+  "plugins": {
+    "PushNotifications": {
+      "presentationOptions": [
+        "badge",
+        "sound",
+        "alert"
+      ]
+    }
+  }
 }
