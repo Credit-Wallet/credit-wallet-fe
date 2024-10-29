@@ -28,10 +28,11 @@ api.interceptors.request.use(config => {
 api.interceptors.response.use(
   response => response,
   error => {
-    console.log('error axios.ts', error);
+    if (error.response && error.response.data.code === 401) {
       // Unauthorized response, possibly due to expired token
-    localStorage.removeItem('access_token'); // Clear the token
-    window.location.href = '/#/login'; // Redirect to login page
+      localStorage.removeItem('access_token'); // Clear the token
+      window.location.href = '/#/login'; // Redirect to login page
+    }
 
     return Promise.reject(error); // Propagate the error
   }

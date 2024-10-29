@@ -6,7 +6,7 @@ import { showToast } from 'vant';
 
 const accountStore = useAccountStore();
 
-const account = ref(accountStore.getAccount());
+const account = ref(accountStore.getAccount);
 
 // Xử lý khi nhấn vào "Cần cập nhật"
 const handleUpdateClick = () => {

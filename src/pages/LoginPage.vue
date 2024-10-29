@@ -2,6 +2,7 @@
 import LoginForm from 'components/authen/LoginForm.vue';
 import { ref } from 'vue';
 import RegisterForm from 'components/authen/RegisterForm.vue';
+import { showFailToast } from 'vant';
 
 const isLogin = ref(true);
 </script>
@@ -14,25 +15,25 @@ const isLogin = ref(true);
 
       <div class="tw-flex tw-items-center tw-my-4">
         <div class="tw-flex-grow tw-h-px tw-bg-gray-300"></div>
-        <span class="tw-mx-2 tw-text-gray-500">Or With</span>
+        <span class="tw-mx-2 tw-text-gray-500">Hoặc với</span>
         <div class="tw-flex-grow tw-h-px tw-bg-gray-300"></div>
       </div>
 
       <div class="tw-flex tw-justify-center tw-space-x-4 tw-mb-6">
-        <van-button round plain class="tw-flex-1">Google</van-button>
-        <van-button round plain class="tw-flex-1">Facebook</van-button>
+        <van-button round plain class="tw-flex-1" @click="showFailToast('Chức năng đang phát triển')">Google</van-button>
+        <van-button round plain class="tw-flex-1" @click="showFailToast('Chức năng đang phát triển')">Facebook</van-button>
       </div>
 
       <p class="tw-text-center tw-text-gray-600" v-if="isLogin">
-        Don't have an account?
+        Bạn chưa có tài khoản ?
         <span class="tw-text-primary text-weight-bold" @click="isLogin = false">
-          Sign Up
+          Đăng ký ngay
         </span>
       </p>
       <p class="tw-text-center tw-text-gray-600" v-else>
-        Already have an account ?
+        Bạn đã có tài khoản ?
         <span class="tw-text-primary text-weight-bold" @click="isLogin = true">
-          Login
+          Đăng nhập ngay
         </span>
       </p>
     </div>

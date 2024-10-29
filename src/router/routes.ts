@@ -30,6 +30,12 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('pages/notification/NotificationPage.vue'), meta: { requiresAuth: true }}],
   },
   {
+    path: '/notification/bill_request/:id',
+    component: () => import('layouts/NavbarLayout.vue'),
+    props: { title: 'Chi tiết yêu cầu thanh toán' },
+    children: [{ path: '', component: () => import('components/notifications/DetailBillRequest.vue'), meta: { requiresAuth: true }}],
+  },
+  {
     path: '/user',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/user/UserPage.vue'), meta: { requiresAuth: true }}],

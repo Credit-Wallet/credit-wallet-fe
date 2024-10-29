@@ -9,14 +9,10 @@ defineOptions({
 });
 
 const router = useRouter();
-
-/*** detection handling ***/
-
 const result = ref('')
 
 const onDetect = async (detectedCodes) => {
    result.value = JSON.stringify(detectedCodes.map((code) => code.rawValue))
-  console.log('result:', result.value);
   const parsedResult = JSON.parse(result.value);
   if (parsedResult[0]?.startsWith('/networks')) {
     //convert parse to string

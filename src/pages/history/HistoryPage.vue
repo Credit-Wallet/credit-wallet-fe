@@ -13,12 +13,12 @@ const active = ref(0);
 <template>
   <q-page>
     <van-tabs v-model:active="active">
-      <van-tab :title="'Yêu cầu'">
+      <van-tab :title="'Yêu cầu đã tạo'">
         <template #default>
             <list-bill />
         </template>
       </van-tab>
-      <van-tab :title="'Giao dịch'">
+      <van-tab :title="'Giao dịch thành công'">
         <template #default>
             <list-transaction />
         </template>

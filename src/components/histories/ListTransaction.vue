@@ -36,8 +36,8 @@ const onLoad = async () => {
       page.value += 1;
     }
   } catch (error) {
-    console.log('Fetch bills failed:', error);
     loading.value = false;
+    finished.value = true;
   }
 };
 
