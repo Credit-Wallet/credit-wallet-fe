@@ -98,6 +98,7 @@ const handleSectionClick = (section) => {
 
 .profile-details {
   margin-left: 12px;
+  min-width: 270px;
 }
 
 .profile-name {

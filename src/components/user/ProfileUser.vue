@@ -57,7 +57,7 @@ const selectImageFromGallery = async () => {
 
   // Gửi ảnh lên server
   await AuthAPI.uploadAvatar(formData).then((response) => {
-    if (response.code === 201) {
+    if (response.code === 200) {
       accountStore.updateAvatar(response.result);
       showSuccessToast('Cập nhật ảnh thành công');
     } else {
@@ -95,7 +95,7 @@ const selectImageFromCamera = async () => {
 
   // Gửi ảnh lên server
   await AuthAPI.uploadAvatar(formData).then((response) => {
-    if (response.code === 201) {
+    if (response.code === 200) {
       accountStore.updateAvatar(response.result);
       showSuccessToast('Cập nhật ảnh thành công');
     } else {

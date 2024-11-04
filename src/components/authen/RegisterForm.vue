@@ -70,7 +70,7 @@ const toggleConfirmPassword = () => {
   <van-form @failed="onFailed" @submit="onSubmit">
     <van-field
       v-model="form.username"
-      name="name"
+      name="username"
       label="Tên"
       placeholder="Nhập tên của bạn"
       required
