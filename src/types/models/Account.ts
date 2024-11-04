@@ -1,8 +1,9 @@
 type Account = {
   id: '',
-  username: '',
-  email: '',
+  username: string,
+  email: string,
   selectedNetworkId: '',
+  urlAvatar: string
 };
 
 export type { Account };

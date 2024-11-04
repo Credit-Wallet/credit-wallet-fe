@@ -3,10 +3,13 @@ import { ref } from 'vue';
 import { showToast } from 'vant';
 import avatar from 'assets/images/avatar.jpeg';
 import { useRouter } from 'vue-router';
+import { useAccountStore } from 'stores/account-store';
 
-const userName = ref('phanhoaian09006@gmail.com');
+const accountStore = useAccountStore();
+const account = ref(accountStore.getAccount);
 const isVerified = ref(true);
 const router = useRouter();
+const baseUrl = process.env.backend_url;
 
 const sections = ref([
   { id: 1, icon: 'user-o', text: 'Hồ sơ' },
@@ -44,11 +47,11 @@ const handleSectionClick = (section) => {
           round
           width="70px"
           height="70px"
-          :src="avatar"
+          :src="baseUrl + account.urlAvatar ?? avatar"
           fit="cover"
         />
         <div class="profile-details">
-          <div class="profile-name tw-truncate tw-w-4/5">{{ userName }}</div>
+          <div class="profile-name tw-truncate tw-w-4/5">{{ account.email }}</div>
           <van-tag type="primary" v-if="isVerified" size="medium">Đã xác thực</van-tag>
         </div>
       </div>

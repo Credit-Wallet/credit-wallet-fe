@@ -40,10 +40,10 @@
   resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-3.9.0.tgz#73032c49e0d6cdb4bdd1c01565e28f3913f25fee"
   integrity sha512-YTPyrh1NozEuYXWGtfqN27TLXUrLbZX9fggyd4JQ1yMaUZTmLPm5dCuznONhQ49aPkJnUJB02JfpHy/qGwa2Lw==
 
-"@capacitor/camera@^6.0.2":
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-6.0.2.tgz#353374f83a64b66b8b474a04d5e8167d680490ef"
-  integrity sha512-bC2xxCcNTyfKYuLNLbGIyLlK9fok2MDhF4v8s01jusYAxoBI7LaKWQMQoGBA1MY/Ec6x/2pjIr+7k89Kmdr74g==
+"@capacitor/camera@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-6.1.0.tgz#7ed06e957ed8f4d08130978f395f5417f75ecc72"
+  integrity sha512-pRb8477MMsAbU1Jgro9xHEgTqv8vAZHGIZRx90DUDWX4guaVzqnvQSZxNtoDhYPBn1VjtpZ2DRG3pL87guH1Vw==
 
 "@capacitor/cli@^6.0.0":
   version "6.0.0"

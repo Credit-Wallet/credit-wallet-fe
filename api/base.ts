@@ -1,5 +1,4 @@
 import { AxiosError, AxiosRequestConfig } from 'axios';
-import { showFailToast } from 'vant';
 import { ApiResponse } from 'src/types/response/ApiResponse';
 import { api } from 'boot/axios';
 
@@ -64,6 +63,6 @@ export class BaseApi {
       errorMessage = error.message;
     }
 
-    showFailToast(errorMessage);
+    console.log(errorMessage);
   }
 }

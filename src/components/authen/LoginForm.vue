@@ -21,8 +21,9 @@ const onSubmit = async () => {
     password: form.value.password,
   }).then((response) => {
     localStorage.setItem('access_token', response.result?.token ?? '');
-  })
-    .finally(() => {
+  }).catch(() => {
+    showFailToast('Vui lòng kiểm tra lại thông tin đăng nhập');
+  }).finally(() => {
     loading.value = false;
   });
 
@@ -59,7 +60,7 @@ const togglePassword = () => {
       placeholder="Nhập địa chỉ email của bạn"
       required
       class="tw-mb-4"
-      :rules="[{ pattern: /^.+@.+\..+$/, message: 'Invalid email' }]"
+      :rules="[{ pattern: /^.+@.+\..+$/, message: 'Email không hợp lệ' }]"
     />
     <van-field
       v-model="form.password"

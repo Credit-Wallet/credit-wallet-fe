@@ -15,5 +15,14 @@ export const useAccountStore = defineStore('account', {
     clearAccount() {
       this.account = {} as Account;
     },
+    updateAvatar(avatar: string) {
+      this.account.urlAvatar = avatar;
+    },
+    updateName(name: string) {
+      this.account.username = name;
+    },
+    updateEmail(email: string) {
+      this.account.email = email;
+    }
   },
 });

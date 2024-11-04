@@ -20,6 +20,30 @@ export class AuthAPI extends BaseApi {
   public async saveFcmToken(token: string): Promise<ApiResponse> {
     return this.post('/auth/fcm-token', { token })
   }
+
+  //upload avatar
+  public async uploadAvatar(file: FormData): Promise<ApiResponse> {
+    return this.post('/auth/upload-avatar', file)
+  }
+
+  //update username
+  public async updateUsername(username: string): Promise<ApiResponse> {
+    return this.post('/auth/update-username', username, {
+      headers: { 'Content-Type': 'text/plain' }
+    });
+  }
+
+  //update email
+  public async updateEmail(email: string): Promise<ApiResponse> {
+    return this.post('/auth/update-email', email, {
+      headers: { 'Content-Type': 'text/plain' }
+    });
+  }
+
+  //update password
+  public async updatePassword(password: string): Promise<ApiResponse> {
+    return this.post('/auth/update-password', { password })
+  }
 }
 
 export default new AuthAPI();
