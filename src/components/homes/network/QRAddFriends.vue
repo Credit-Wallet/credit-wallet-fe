@@ -26,7 +26,25 @@ const qrJoinCode = ref('');
 const networks = useNetworkStore()
 
 const onSelect = (option) => {
-  showToast(option.name);
+  if (option.name === 'Poster') {
+    //save image use javascript code
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    img.src = qrJoinCode.value;
+    img.onload = function () {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'QRCode.png';
+      a.click();
+    };
+  } else {
+    showToast(option.name);
+  }
+
   showShare.value = false;
 };
 
@@ -37,6 +55,22 @@ const generateQRCode = async () => {
   } catch (error) {
     console.log('Generate QR code failed:', error);
   }
+}
+
+const saveQRImage = () => {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.src = qrJoinCode.value;
+  img.onload = function () {
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'QRCode.png';
+    a.click();
+  };
 }
 
 onMounted(() => {
@@ -64,7 +98,7 @@ onMounted(() => {
         </van-col>
 
         <van-col col="12">
-          <van-button class="tw-mb-4" plain>
+          <van-button class="tw-mb-4" plain @click="saveQRImage">
             <q-icon name="save" size="30px" />
             <span>Lưu ảnh</span>
           </van-button>

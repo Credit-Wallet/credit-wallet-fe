@@ -32,7 +32,16 @@ const savePayment = () => {
 }
 
 const onSelect = (option: { name: string }) => {
-  showToast(option.name);
+  if (option.name === 'Link') {
+    const link = process.env.VUE_APP_BACKEND_URL + '/payment/' + '123456';
+    //copy link
+    navigator.clipboard.writeText(link).then(() => {
+      showToast('Đã sao chép link');
+    });
+  } else {
+    showToast(option.name);
+  }
+
   showShare.value = false;
 };
 

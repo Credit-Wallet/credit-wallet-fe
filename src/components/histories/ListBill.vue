@@ -53,7 +53,12 @@ const onRefresh = () => {
 const cancelBill = async (dataBill) => {
   try {
     await BillAPI.cancelBill(dataBill.id, dataBill);
-    list.value = list.value.filter((bill) => bill.id !== dataBill.id);
+    list.value = list.value.map((bill) => {
+      if (bill.id === dataBill.id) {
+        bill.status = 'CANCELLED';
+      }
+      return bill;
+    });
   } catch (error) {
     console.log('Cancel bill failed:', error);
   }
@@ -62,7 +67,12 @@ const cancelBill = async (dataBill) => {
 const confirmBill = async (billId) => {
   try {
     await BillAPI.confirmBill(billId);
-    list.value = list.value.filter((bill) => bill.id !== billId);
+    list.value = list.value.map((bill) => {
+      if (bill.id === billId) {
+        bill.status = 'COMPLETED';
+      }
+      return bill;
+    });
   } catch (error) {
     console.log('Confirm bill failed:', error);
   }
