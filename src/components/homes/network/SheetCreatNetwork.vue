@@ -3,7 +3,7 @@ import FormNetwork from 'components/homes/network/FormNetwork.vue';
 import { ref } from 'vue';
 import { useNetworkStore } from 'stores/network-store';
 import { Network } from 'src/types/models/Network';
-import { showSuccessToast } from 'vant';
+import { showFailToast, showLoadingToast, showSuccessToast } from 'vant';
 import NetworkAPI from 'app/api/network';
 import { formatMoneyToNumber } from 'src/util/formatter';
 
@@ -40,6 +40,10 @@ const resetForm = () => {
 
 const createNetwork = async () => {
   try {
+    showLoadingToast({
+      message: 'Đang xử lý...',
+      forbidClick: true,
+    });
     // convert 200,000 to 200000
     let formData = {
       ...form.value,
@@ -54,6 +58,7 @@ const createNetwork = async () => {
     emit('createNetwork')
   } catch (error) {
     console.log('Create network failed:', error);
+    showFailToast('Tạo mạng thất bại')
   }
 }
 </script>

@@ -74,7 +74,13 @@ const onRefresh = () => {
               <span>Số tiền: {{ formatMoney(item.amount) }}</span>
               <span>Mạng: {{ item.networkId }}</span>
             </div>
-            <div class="transaction-time">{{ formatTime(item.createdAt) }}</div>
+            <div class="tw-flex tw-justify-between">
+              <div class="transaction-time">{{ formatTime(item.createdAt) }}</div>
+
+              <a v-if="item.hash != null" href="https://sepolia.infura.io/v3/ + {{ item.hash }}" class="tw-text-blue-500 transaction-title">
+                Xem chi tiết trên Blockchain
+              </a>
+            </div>
           </div>
         </div>
       </van-swipe-cell>
@@ -107,7 +113,7 @@ const onRefresh = () => {
 }
 
 .transaction-title {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .transaction-title span {

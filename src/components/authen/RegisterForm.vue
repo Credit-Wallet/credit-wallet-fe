@@ -37,6 +37,12 @@ const onSubmit = async (values) => {
     });
     localStorage.setItem('access_token', res.result?.token ?? '');
 
+    // Save FCM token
+    const token = localStorage.getItem('fcm_token');
+    if (token) {
+      await AuthAPI.saveFcmToken(token).then(r => console.log(r));
+    }
+
     showSuccessToast('Đăng ký tài khoản thành công');
     await router.push('/');
   }).catch((error) => {
@@ -75,7 +81,7 @@ const toggleConfirmPassword = () => {
       placeholder="Nhập tên của bạn"
       required
       class="tw-mb-4"
-      :rules="[{ pattern: /^.{3,}$/, message: 'Tên phải có ít nhất 3 ký tự' }]"
+      :rules="[{ pattern: /^.{6,}$/, message: 'Tên phải có ít nhất 6 ký tự' }]"
     />
     <van-field
       v-model="form.email"

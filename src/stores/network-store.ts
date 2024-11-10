@@ -23,9 +23,13 @@ export const useNetworkStore = defineStore('networks', {
     },
     selectNetworkByAccount(account: Account) {
       this.selectedNetwork = this.networks.find((network: Network) => network.id === account.selectedNetworkId) as Network || this.networks[0];
+      console.log('selectedNetwork', this.selectedNetwork);
 
-      const selectedNetworkId = Number(account.selectedNetworkId);
-      AccountAPI.selectedNetwork(selectedNetworkId ?? null);
+      if (!this.selectedNetwork) {
+        return
+      }
+
+      AccountAPI.selectedNetwork(Number(this.selectedNetwork.id));
     },
     addMembers(members: Account[]) {
       this.members = members
