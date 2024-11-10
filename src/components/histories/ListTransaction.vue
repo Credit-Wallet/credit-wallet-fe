@@ -16,7 +16,7 @@ const onLoad = async () => {
     const response = await TransactionAPI.getTransactions({
       page: page.value,
       limit: pageSize.value,
-      sort: 'createdAt,DESC'
+      sort: 'createdAt,DESC',
     });
 
     const bills = response.result.content;
@@ -75,9 +75,15 @@ const onRefresh = () => {
               <span>Mạng: {{ item.networkId }}</span>
             </div>
             <div class="tw-flex tw-justify-between">
-              <div class="transaction-time">{{ formatTime(item.createdAt) }}</div>
+              <div class="transaction-time">
+                {{ formatTime(item.createdAt) }}
+              </div>
 
-              <a v-if="item.hash != null" href="https://sepolia.infura.io/v3/ + {{ item.hash }}" class="tw-text-blue-500 transaction-title">
+              <a
+                v-if="item.hash != null"
+                :href="'https://sepolia.etherscan.io/tx/' + item.hash"
+                class="tw-text-blue-500 transaction-title"
+              >
                 Xem chi tiết trên Blockchain
               </a>
             </div>
