@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 // import qrTest from 'assets/images/qr_test.webp'
-import { showToast } from 'vant';
+import { showSuccessToast, showToast } from 'vant';
 import NetworkAPI from 'app/api/network';
 import { useNetworkStore } from 'stores/network-store';
 
@@ -41,6 +41,14 @@ const onSelect = (option) => {
       a.download = 'QRCode.png';
       a.click();
     };
+  } else if (option.name === 'Link') {
+    const input = document.createElement('input');
+    input.value = `${window.location.origin}` + `/#/home/networks/${networks.selectedNetwork.uuid}/join`;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+    showSuccessToast('Đã sao chép mã QR');
   } else {
     showToast(option.name);
   }

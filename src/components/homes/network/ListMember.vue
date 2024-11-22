@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import AccountAPI from 'app/api/account';
 import { useNetworkStore } from 'stores/network-store';
 import avatar from 'assets/images/avatar.jpeg';
@@ -7,6 +7,7 @@ import avatar from 'assets/images/avatar.jpeg';
 const loading = ref(false);
 const finished = ref(false);
 const networks = useNetworkStore();
+const baseUrl = process.env.backend_url;
 
 const fetchMembers = async (networkId) => {
   await AccountAPI.getAccountsByNetworkId({ networkId: networkId}).then((response) => {
@@ -24,6 +25,9 @@ const onLoad = async () => {
   finished.value = true;
 };
 
+onMounted(() => {
+  onLoad();
+});
 </script>
 
 <template>
@@ -32,30 +36,31 @@ const onLoad = async () => {
       <van-icon name="wap-nav" size="25" />
       <span class="tw-text-base tw-ml-2 tw-mt-1">Danh sách thành viên</span>
     </div>
-    <div class="tw-max-h-10">
-      <van-list
-        v-model:loading="loading"
-        :finished="finished"
-        finished-text="Finished"
-        @load="onLoad"
-      >
-        <div v-for="(member, index) in networks.members" :key="index" class="tw-flex tw-items-center tw-py-2">
-          <van-image
-            round
-            width="40px"
-            height="40px"
-            :src="member.avatar || avatar"
-          />
-          <div class="tw-ml-4 tw-flex-grow">
-            <div class="tw-font-medium">{{ member.username }}</div>
-            <div class="tw-text-gray-500">{{ member.email }}</div>
-          </div>
+    <van-list
+      v-model:loading="loading"
+      :finished="finished"
+      finished-text="Finished"
+      class="list-members"
+    >
+      <div v-for="(member, index) in networks.members" :key="index" class="tw-flex tw-items-center tw-py-2 tw-ml-1">
+        <van-image
+          round
+          width="40px"
+          height="40px"
+          :src="member.urlAvatar ? baseUrl + member.urlAvatar : avatar"
+        />
+        <div class="tw-ml-4 tw-flex-grow">
+          <div class="tw-font-medium">{{ member.username }}</div>
+          <div class="tw-text-gray-500">{{ member.email }}</div>
         </div>
-      </van-list>
-    </div>
+      </div>
+    </van-list>
   </div>
 </template>
 
-<!--<style scoped>-->
-
-<!--</style>-->
+<style scoped>
+.list-members {
+  max-height: 60vh !important;
+  overflow-y: auto;
+}
+</style>

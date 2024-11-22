@@ -47,7 +47,7 @@ const handleSectionClick = (section) => {
           round
           width="70px"
           height="70px"
-          :src="baseUrl + account.urlAvatar ?? avatar"
+          :src="account.urlAvatar ? baseUrl + account.urlAvatar : avatar"
           fit="cover"
         />
         <div class="profile-details">

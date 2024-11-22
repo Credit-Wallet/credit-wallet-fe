@@ -21,10 +21,10 @@ const clickSheetQRJoin = () => {
       <p class="tw-text-center">Tạo GD</p>
     </div>
     <div class="tw-flex tw-flex-col tw-items-center tw-gap-2">
-      <van-button round class="icon-container-1" :plain="true">
+      <van-button round class="icon-container-1" :plain="true" @click="router.push('/home/send-money')">
         <q-icon name="arrow_upward" size="30px" />
       </van-button>
-      <p class="tw-text-center">Chuyển</p>
+      <p class="tw-text-center">Chuyển điểm</p>
     </div>
     <div class="tw-flex tw-flex-col tw-items-center tw-gap-2">
       <van-button round class="icon-container-1" @click="clickSheetQRJoin">

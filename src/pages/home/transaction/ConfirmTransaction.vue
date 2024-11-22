@@ -12,6 +12,7 @@ const showDialogUpdateMoney = ref(false);
 const memberUpdateMoney = ref(null);
 const description = ref(null);
 const router = useRouter();
+const baseUrl = process.env.backend_url;
 
 const transaction = useTransactionStore();
 const totalMoney = ref(transaction.getMoney);
@@ -140,7 +141,7 @@ const createTransaction = async () => {
 
         <div>
           <p class="tw-text-base">Danh sách ({{ memberList.length }})</p>
-          <CheckboxGroup v-model="selectedMembers" direction="vertical">
+          <CheckboxGroup v-model="selectedMembers" direction="vertical" class="tw-max-h-[60vh] tw-overflow-y-auto">
             <div v-for="(member) in memberList" :key="member.id" class="tw-flex tw-justify-between tw-items-center tw-py-2">
               <div class="tw-flex tw-items-center">
                 <van-checkbox :name="member.id" @click="updateSelectMember(member)" />
@@ -148,7 +149,7 @@ const createTransaction = async () => {
                   round
                   width="40px"
                   height="40px"
-                  :src="member.avatar || avatar"
+                  :src="member.avatar ? baseUrl + member.avatar : avatar"
                   class="tw-mx-4"
                 />
                 <div>

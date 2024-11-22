@@ -1,5 +1,6 @@
 type Network = {
   id: '',
+  uuid: '',
   name: '',
   minBalance: '',
   maxBalance: '',

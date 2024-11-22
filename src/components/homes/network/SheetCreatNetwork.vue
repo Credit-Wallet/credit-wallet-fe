@@ -18,6 +18,7 @@ const emit = defineEmits(['createNetwork'])
 
 const form = ref<Network>({
   id: '',
+  uuid: '',
   name: '',
   minBalance: '',
   maxBalance: '',
@@ -29,6 +30,7 @@ const form = ref<Network>({
 const resetForm = () => {
   form.value = {
     id: '',
+    uuid: '',
     name: '',
     minBalance: '',
     maxBalance: '',

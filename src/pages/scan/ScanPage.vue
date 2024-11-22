@@ -1,7 +1,6 @@
 <script setup>
 import { QrcodeStream } from 'vue-qrcode-reader';
 import { computed, ref } from 'vue';
-import NetworkAPI from 'app/api/network';
 import { useRouter } from 'vue-router';
 
 defineOptions({
@@ -14,17 +13,20 @@ const result = ref('')
 const onDetect = async (detectedCodes) => {
    result.value = JSON.stringify(detectedCodes.map((code) => code.rawValue))
   const parsedResult = JSON.parse(result.value);
-  if (parsedResult[0]?.startsWith('/networks')) {
-    //convert parse to string
-    const url = parsedResult[0].toString();
-    await NetworkAPI.join({ url: url})
-      .then((response) => {
-        console.log('Join network success:', response);
-        router.push('/');
-      })
-      .catch((error) => {
-        console.log('Join network failed:', error);
-      });
+  console.log(parsedResult);
+  // Kiểm tra nếu có ít nhất một mã QR hợp lệ
+  if (parsedResult.length > 0) {
+    const url = parsedResult[0].toString(); // Lấy URL từ mã QR
+
+    // Kiểm tra nếu URL kết thúc bằng "join"
+    if (url.endsWith('/join')) {
+      const normalizedUrl = url.startsWith('http') ? url : `http://${window.location.host}/#${url}`;
+      router.push(normalizedUrl.replace(`${window.location.origin}/#`, '')); // Chuyển hướng đến URL
+    } else {
+      console.log('URL không hợp lệ hoặc không kết thúc bằng /join:', url);
+    }
+  } else {
+    console.log('Không tìm thấy mã QR hợp lệ.');
   }
 }
 

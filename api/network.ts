@@ -18,6 +18,18 @@ export class NetworkAPI extends BaseApi {
   networksOfAccount(): Promise<ApiResponse> {
     return this.get('/networks')
   }
+
+  getNetworks(): Promise<ApiResponse> {
+    return this.get('/networks')
+  }
+
+  getNetworkByUuid(uuid: string): Promise<ApiResponse> {
+    return this.get(`/networks/${uuid}/uuid`)
+  }
+
+  joinNetworkByUuid(uuid: bigint): Promise<ApiResponse> {
+    return this.post(`/networks/join-uuid?networkUuid=${uuid}`)
+  }
 }
 
 export default new NetworkAPI();

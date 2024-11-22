@@ -75,6 +75,18 @@ const routes: RouteRecordRaw[] = [
     props: { title: 'Thành công', buttonLeft: false, rightText: 'Trang chủ', rightPath: '/'},
     children: [{ path: '', component: () => import('pages/home/transaction/FinishTransaction.vue'), meta: { requiresAuth: true }}],
   },
+  {
+    path:  '/home/networks/:uuid/join',
+    component: () => import('layouts/NavbarLayout.vue'),
+    props: { title: 'Tham gia mạng', buttonLeft: false, buttonRight: false },
+    children: [{ path: '', component: () => import('pages/home/NetworkJoin.vue'), meta: { requiresAuth: true }}],
+  },
+  {
+    path: '/home/send-money',
+    component: () => import('layouts/NavbarLayout.vue'),
+    props: { title: 'Chuyển tiền' },
+    children: [{ path: '', component: () => import('pages/home/send-money/SendMoney.vue'), meta: { requiresAuth: true }}],
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

@@ -2,6 +2,7 @@
 import TransactionAPI from 'app/api/transaction';
 import { ref } from 'vue';
 import { formatMoney, formatTime } from 'src/util/formatter';
+import { showSuccessToast } from 'vant';
 
 const list = ref([]);
 const loading = ref(false);
@@ -47,6 +48,11 @@ const onRefresh = () => {
   refreshing.value = true;
   onLoad();
 };
+
+const copyLink = (hash) => {
+  navigator.clipboard.writeText(`https://sepolia.etherscan.io/tx/${hash}`);
+  showSuccessToast('Đã copy link');
+};
 </script>
 
 <template>
@@ -79,13 +85,17 @@ const onRefresh = () => {
                 {{ formatTime(item.createdAt) }}
               </div>
 
-              <a
-                v-if="item.hash != null"
-                :href="'https://sepolia.etherscan.io/tx/' + item.hash"
-                class="tw-text-blue-500 transaction-title"
-              >
-                Xem chi tiết trên Blockchain
-              </a>
+              <div class="tw-text-center">
+                <a
+                  v-if="item.hash != null"
+                  :href="'https://sepolia.etherscan.io/tx/' + item.hash"
+                  class="tw-text-blue-500 transaction-title"
+                >
+                  Xem chi tiết trên Blockchain
+                </a>
+
+                <van-icon v-if="item.hash" size="20" name="link-o" class="icon-style" @click="copyLink(item.hash)" />
+              </div>
             </div>
           </div>
         </div>

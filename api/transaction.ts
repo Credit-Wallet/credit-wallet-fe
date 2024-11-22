@@ -12,6 +12,16 @@ export class TransactionAPI extends BaseApi {
   public async getTransactions(params: Pagination): Promise<ApiResponse> {
     return this.get('/transactions?page=' + params.page + '&limit=' + params.limit + '&sort=' + params.sort);
   }
+
+  //transfer-money
+  public async transferMoney(told: number, amount: number): Promise<ApiResponse> {
+    return this.post('/wallets/transfer-money?toId=' + told + '&amount=' + amount);
+  }
+
+  //get wallet
+  public async getWallet(): Promise<ApiResponse> {
+    return this.get('/wallets');
+  }
 }
 
 export default new TransactionAPI();

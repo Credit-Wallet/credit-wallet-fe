@@ -1,15 +1,31 @@
-<script setup lang="ts">
-import { ref } from 'vue';
+<script setup>
+import { onMounted, ref } from 'vue';
 import CardNetwork from 'components/homes/network/CardNetwork.vue';
 import CreateNetwork from 'components/homes/network/CreateNetwork.vue';
 import { useNetworkStore } from 'stores/network-store';
+import TransactionAPI from 'app/api/transaction';
+import { formatMoney } from 'src/util/formatter';
 
 const balance = ref(0)
 const sheetWallet = ref(false)
 const dialogCreateWallet = ref(false)
 const networks = useNetworkStore()
 
+const fetchBalance = async () => {
+  await TransactionAPI.getWallet()
+    .then((res) => {
+      balance.value = res.result.balance
+      balance.value = Math.round(balance.value * 10) / 10
+    })
+    .catch((error) => {
+      console.log('Fetch balance failed:', error)
+    })
+}
+
 console.log('networks 123:', networks.selectedNetwork);
+onMounted(() => {
+  fetchBalance()
+})
 </script>
 
 <template>
@@ -22,7 +38,7 @@ console.log('networks 123:', networks.selectedNetwork);
       </div>
 
       <div>
-        <span class="tw-text-2xl">{{ balance }} $</span>
+        <span class="tw-text-2xl">{{ formatMoney(balance) }}</span>
       </div>
     </div>
   </div>

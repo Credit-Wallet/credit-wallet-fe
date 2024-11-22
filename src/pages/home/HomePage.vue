@@ -73,7 +73,7 @@ onMounted(() => {
 
             <ActionNetwork />
 
-            <ListMember class="tw-mt-4" />
+            <ListMember class="tw-mt-4 tw-h-[60vh]" />
           </div>
         </div>
       </van-pull-refresh>

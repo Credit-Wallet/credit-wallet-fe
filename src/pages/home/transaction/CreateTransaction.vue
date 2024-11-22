@@ -1,6 +1,6 @@
 <script setup>
 import avatar from 'assets/images/avatar.jpeg';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useNetworkStore } from 'stores/network-store';
 import AccountAPI from 'app/api/account';
 import { useAccountStore } from 'stores/account-store';
@@ -15,17 +15,20 @@ const transaction = useTransactionStore();
 const router = useRouter();
 const money = ref(null);
 const form = ref(null);
+const search = ref('');
+const baseUrl = process.env.backend_url;
 
 const listSelectedTransaction = ref([
   {
     id: account.account.id,
-    avatar: account.account.avatar || avatar,
+    avatar: account.account.urlAvatar,
     username: account.account.username,
     email: account.account.email,
     selected: true,
     isSelf: true,
   }
 ]);
+const mySelf = Object.assign({}, listSelectedTransaction.value[0]);
 
 const fetchMembers = async (networkId) => {
   await AccountAPI.getAccountsByNetworkId({ networkId: networkId}).then((response) => {
@@ -38,13 +41,15 @@ const fetchMembers = async (networkId) => {
 const members = ref(networks.members.map((member) => {
   return {
     id: member.id,
-    avatar: member.avatar || avatar,
+    avatar: member.urlAvatar,
     username: member.username,
     email: member.email,
     selected: false,
     isSelf: false,
   };
 }));
+
+const memberSearch = Object.assign([], members.value);
 
 const selectMember = (member) => {
   member.selected = !member.selected
@@ -62,6 +67,15 @@ const removeMember = (member) => {
   );
   if (index !== -1) {
     listSelectedTransaction.value.splice(index, 1); // Remove the member by index
+  }
+};
+
+const updateMySelf = () => {
+  mySelf.isSelf = !mySelf.isSelf;
+  if (mySelf.isSelf) {
+    listSelectedTransaction.value.push(mySelf);
+  } else {
+    removeMember(mySelf);
   }
 };
 
@@ -84,6 +98,42 @@ const onFailed = (error) => {
   console.log('Failed:', error);
 };
 
+const searchMembers = (search) => {
+  if (!search) return memberSearch;
+
+  return memberSearch.filter((member) => {
+    return member.username.toLowerCase().includes(search.toLowerCase());
+  });
+};
+
+const removeAll = () => {
+  mySelf.isSelf = true;
+  listSelectedTransaction.value = [mySelf];
+  members.value.forEach((member) => {
+    member.selected = false;
+  });
+};
+
+const selectedAll = () => {
+  mySelf.isSelf = true;
+  listSelectedTransaction.value = [{
+    id: account.account.id,
+    avatar: account.account.urlAvatar,
+    username: account.account.username,
+    email: account.account.email,
+    selected: true,
+    isSelf: true,
+  }];
+  listSelectedTransaction.value = listSelectedTransaction.value.concat(members.value);
+  members.value.forEach((member) => {
+    member.selected = true;
+  });
+};
+
+watch(search, (value) => {
+  members.value = searchMembers(value);
+});
+
 onMounted(
   () => {
     if (networks.countMembers === 0) {
@@ -97,6 +147,7 @@ onMounted(
   <van-search
     shape="round"
     placeholder="Tìm kiếm"
+    v-model="search"
   />
 
   <div class="tw-mx-3">
@@ -124,22 +175,47 @@ onMounted(
       <div class="van-card__header">
         <div class="van-card__title tw-w-full tw-flex tw-justify-between">
             <span class="tw-text-base tw-ml-2 tw-mt-1">Danh sách chia tiền ({{ listSelectedTransaction.length }})</span>
-            <span class="tw-text-base tw-ml-2 tw-mt-1">Bỏ chọn tất cả</span>
+            <span v-if="listSelectedTransaction.length > 1" class="tw-text-base tw-ml-2 tw-mt-1" @click="removeAll">Bỏ chọn tất cả</span>
+            <span v-else class="tw-text-base tw-ml-2 tw-mt-1" @click="selectedAll">Chọn tất cả</span>
         </div>
       </div>
 
       <div class="van-card__content">
         <div class="tw-mt-2 tw-overflow-x-auto tw-flex tw-space-x-4 tw-py-2">
-          <van-badge :offset="[-12, 0]" color="#000" v-for="(member, index) in listSelectedTransaction" :key="index">
+          <van-badge :offset="[-12, 0]" color="#000" v-if="mySelf.isSelf">
             <div class="tw-flex tw-flex-col tw-items-center tw-w-[80px]">
               <van-image
                 round
                 width="50px"
                 height="50px"
-                :src="member.avatar"
+                :src="mySelf.avatar ? baseUrl + mySelf.avatar : avatar"
               />
-              <span v-if="member.isSelf" class="tw-text-sm tw-mt-1 tw-truncate tw-w-full tw-text-center">Bao gồm tôi</span>
-              <span v-else class="tw-text-sm tw-mt-1 tw-truncate tw-w-full tw-text-center">{{ member.username }}</span>
+              <span class="tw-text-sm tw-mt-1 tw-truncate tw-w-full tw-text-center">Bao gồm tôi</span>
+            </div>
+
+            <template #content>
+              <van-icon name="cross" class="badge-icon" @click="updateMySelf" />
+            </template>
+          </van-badge>
+          <div v-else class="tw-flex tw-flex-col tw-items-center tw-w-[80px]">
+            <van-image
+              round
+              width="50px"
+              height="50px"
+              :src="mySelf.avatar ? baseUrl + mySelf.avatar : avatar"
+              @click="updateMySelf"
+            />
+            <span class="tw-text-sm tw-mt-1 tw-truncate tw-w-full tw-text-center">Bao gồm tôi</span>
+          </div>
+          <van-badge :offset="[-12, 0]" color="#000" v-for="(member, index) in listSelectedTransaction" :key="index" v-show="!member.isSelf">
+            <div class="tw-flex tw-flex-col tw-items-center tw-w-[80px]">
+              <van-image
+                round
+                width="50px"
+                height="50px"
+                :src="member.avatar ? baseUrl + member.avatar : avatar"
+              />
+              <span class="tw-text-sm tw-mt-1 tw-truncate tw-w-full tw-text-center">{{ member.username }}</span>
             </div>
 
             <template #content>
@@ -158,19 +234,23 @@ onMounted(
         </div>
       </div>
 
-      <div class="van-card__content">
-        <div v-for="(member, index) in members" :key="index" class="tw-flex tw-items-center tw-py-2" @click="selectMember(member)">
+      <div class="van-card__content tw-max-h-[47vh] tw-overflow-y-auto">
+        <div v-for="(member, index) in members" :key="index" class="tw-flex tw-items-center tw-py-2 tw-ml-2" @click="selectMember(member)">
           <van-image
             round
             width="40px"
             height="40px"
-            :src="member.avatar || avatar"
+            :src="member.avatar ? baseUrl + member.avatar : avatar"
           />
           <div class="tw-ml-4 tw-flex-grow">
             <div class="tw-font-medium">{{ member.username }}</div>
             <div class="tw-text-gray-500">{{ member.email }}</div>
           </div>
-          <van-checkbox v-model="member.selected" />
+
+          <van-checkbox
+            :model-value="member.selected"
+            class="tw-mr-4"
+          />
         </div>
       </div>
     </div>

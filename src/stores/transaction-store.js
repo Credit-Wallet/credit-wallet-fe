@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import avatar from 'assets/images/avatar.jpeg';
 import { formatMoneyToNumber } from 'src/util/formatter';
 
 export const useTransactionStore = defineStore('transaction', {
@@ -178,7 +177,7 @@ export const useTransactionStore = defineStore('transaction', {
         return {
           ...member,
           money: moneyForMember,
-          avatar: member.avatar || avatar,
+          avatar: member.avatar,
           updateMoney: member.updateMoney || false,
         };
       });

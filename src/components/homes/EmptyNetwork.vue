@@ -2,12 +2,17 @@
 import shield from 'assets/images/shield.jpg';
 import { ref } from 'vue';
 import SheetCreatNetwork from 'components/homes/network/SheetCreatNetwork.vue';
+import { showFailToast } from 'vant';
 
 const emit = defineEmits(['createNetwork']);
 const sheetCreateNetwork = ref(false);
 
 const emitCreateNetwork = () => {
   emit('createNetwork');
+};
+
+const addGroup = () => {
+  showFailToast('Chức năng đang phát triển');
 };
 </script>
 
@@ -26,7 +31,7 @@ const emitCreateNetwork = () => {
         @click="sheetCreateNetwork = true"
       >
         <template #title>
-          <span class="tw-text-base text-weight-bold">Tạo một mạng mới</span>
+          <span class="tw-text-base text-weight-bold">Tạo một nhóm mới</span>
         </template>
 
         <template #thumb>
@@ -43,9 +48,10 @@ const emitCreateNetwork = () => {
       <van-card
         class="tw-rounded-xl card-create-wallet tw-h-[64px]"
         desc="Nhập, khôi phục"
+        @click="addGroup"
       >
         <template #title>
-          <span class="tw-text-base text-weight-bold">Thêm mạng hiện có</span>
+          <span class="tw-text-base text-weight-bold">Thêm nhóm hiện có</span>
         </template>
 
         <template #thumb>

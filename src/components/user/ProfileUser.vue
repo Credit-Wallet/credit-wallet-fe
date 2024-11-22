@@ -177,7 +177,7 @@ const handleConfirmUpdateEmail = (action) => {
       </template>
 
       <template #right-icon>
-        <van-image :src="baseUrl + account.urlAvatar ?? avatar" width="40" height="40" round />
+        <van-image :src="account.urlAvatar ? baseUrl + account.urlAvatar : avatar" width="40" height="40" round />
       </template>
     </van-cell>
 
