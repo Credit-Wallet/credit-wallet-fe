@@ -14,6 +14,11 @@ export class AccountAPI extends BaseApi {
   public async selectedNetwork(networkId: number): Promise<ApiResponse> {
     return this.put('/accounts/update-selected-network/' + networkId);
   }
+
+  //update-is-two-factor
+  public async updateIsTwoFactor(): Promise<ApiResponse> {
+    return this.post('/auth/update-is-two-factor');
+  }
 }
 
 export default new AccountAPI();

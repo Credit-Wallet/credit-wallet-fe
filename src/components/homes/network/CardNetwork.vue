@@ -31,7 +31,7 @@ const selectNetwork = async (network) => {
     <van-card
       class="tw-rounded-xl"
       title="Ví chính"
-      desc="Đây là ví chính"
+      :desc="network.id === networks.selectedNetwork.id ? 'Đang chọn' : ''"
       v-for="(network, index) in networks.networks"
       :key="index"
       @click="selectNetwork(network)"

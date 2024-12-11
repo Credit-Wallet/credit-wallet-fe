@@ -3,7 +3,9 @@ type Account = {
   username: string,
   email: string,
   selectedNetworkId: '',
-  urlAvatar: string
+  urlAvatar: string,
+  twoFactor: boolean,
+  secretKey: string,
 };
 
 export type { Account };

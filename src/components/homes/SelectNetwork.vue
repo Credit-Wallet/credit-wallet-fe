@@ -10,8 +10,10 @@ const balance = ref(0)
 const sheetWallet = ref(false)
 const dialogCreateWallet = ref(false)
 const networks = useNetworkStore()
+const loading = ref(false)
 
 const fetchBalance = async () => {
+  loading.value = true
   await TransactionAPI.getWallet()
     .then((res) => {
       balance.value = res.result.balance
@@ -20,6 +22,14 @@ const fetchBalance = async () => {
     .catch((error) => {
       console.log('Fetch balance failed:', error)
     })
+    .finally(() => {
+      loading.value = false
+    })
+}
+
+const closeSheetWallet = () => {
+  sheetWallet.value = false
+  fetchBalance()
 }
 
 console.log('networks 123:', networks.selectedNetwork);
@@ -38,7 +48,8 @@ onMounted(() => {
       </div>
 
       <div>
-        <span class="tw-text-2xl">{{ formatMoney(balance) }}</span>
+        <span v-if="loading" class="tw-text-2xl">...</span>
+        <span v-else class="tw-text-2xl">{{ formatMoney(balance) }}</span>
       </div>
     </div>
   </div>
@@ -55,7 +66,7 @@ onMounted(() => {
         </div>
 
         <div>
-          <card-network @close-sheet-wallet="sheetWallet = false" />
+          <card-network @close-sheet-wallet="closeSheetWallet" />
         </div>
       </div>
     </template>

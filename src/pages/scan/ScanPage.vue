@@ -21,7 +21,10 @@ const onDetect = async (detectedCodes) => {
     // Kiểm tra nếu URL kết thúc bằng "join"
     if (url.endsWith('/join')) {
       const normalizedUrl = url.startsWith('http') ? url : `http://${window.location.host}/#${url}`;
-      router.push(normalizedUrl.replace(`${window.location.origin}/#`, '')); // Chuyển hướng đến URL
+      // https://friendspay.surge.sh/#/home/networks/fb6ed633-1615-41db-ba44-4274f429849a/join
+      // I want to get string from /#/ to /join
+      const name = normalizedUrl.split('/#/')[1];
+      router.push(name); // Chuyển hướng đến URL
     } else {
       console.log('URL không hợp lệ hoặc không kết thúc bằng /join:', url);
     }

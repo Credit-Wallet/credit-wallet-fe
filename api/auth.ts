@@ -44,6 +44,16 @@ export class AuthAPI extends BaseApi {
   public async updatePassword(password: string): Promise<ApiResponse> {
     return this.post('/auth/update-password', { password })
   }
+
+  //generate
+  public async generateTwoFactor(userName: string): Promise<ApiResponse> {
+    return this.get('/auth/generate-two-factor/' + userName)
+  }
+
+  //validate
+  public async validateTwoFactor(email: string, otp: number): Promise<ApiResponse> {
+    return this.post('/auth/validate-two-factor?email=' + email + '&otp=' + otp)
+  }
 }
 
 export default new AuthAPI();
