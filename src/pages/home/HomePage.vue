@@ -21,7 +21,6 @@ const refreshing = ref(false);
 
 const fetchAccountAndNetwork = async () => {
   isLoading.value = true;
-  console.log(1);
   account.clearAccount();
   await AccountAPI.getProfile().then((response) => {
     account.setAccount(response.result);

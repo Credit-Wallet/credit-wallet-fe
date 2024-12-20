@@ -30,6 +30,10 @@ export class NetworkAPI extends BaseApi {
   joinNetworkByUuid(uuid: bigint): Promise<ApiResponse> {
     return this.post(`/networks/join-uuid?networkUuid=${uuid}`)
   }
+
+  outNetwork(): Promise<ApiResponse> {
+    return this.delete('/networks/leave')
+  }
 }
 
 export default new NetworkAPI();

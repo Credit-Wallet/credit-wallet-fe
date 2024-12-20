@@ -1,15 +1,16 @@
 <script setup>
 import { ref } from 'vue';
-import { showToast } from 'vant';
+import { showSuccessToast, showToast } from 'vant';
 import avatar from 'assets/images/avatar.jpeg';
 import { useRouter } from 'vue-router';
 import { useAccountStore } from 'stores/account-store';
+import { useWalletStore } from 'stores/wallet-store';
 
 const accountStore = useAccountStore();
 const account = ref(accountStore.getAccount);
-const isVerified = ref(true);
 const router = useRouter();
 const baseUrl = process.env.backend_url;
+const walletStore = useWalletStore();
 
 const sections = ref([
   { id: 1, icon: 'user-o', text: 'Hồ sơ' },
@@ -36,6 +37,11 @@ const handleSectionClick = (section) => {
       break;
   }
 };
+
+const copyLink = (walletAdress) => {
+  navigator.clipboard.writeText(walletAdress);
+  showSuccessToast('Đã sao chép');
+};
 </script>
 
 <template>
@@ -52,7 +58,11 @@ const handleSectionClick = (section) => {
         />
         <div class="profile-details">
           <div class="profile-name tw-truncate tw-w-4/5">{{ account.email }}</div>
-          <van-tag type="primary" v-if="isVerified" size="medium">Đã xác thực</van-tag>
+          <van-tag type="warning" size="medium">Chưa xác thực</van-tag>
+          <div v-if="walletStore.getWallet.walletAddress != null">
+            <span class="tw-text-white">Địa chỉ ví blockchain của bạn</span>
+            <van-icon size="20" name="link-o" class="icon-style tw-ml-1" @click="copyLink(walletStore.getWallet.walletAddress)" />
+          </div>
         </div>
       </div>
     </div>
@@ -105,5 +115,10 @@ const handleSectionClick = (section) => {
   font-size: 20px;
   color: white;
   font-weight: bold;
+}
+
+.icon-style {
+  font-size: 24px;
+  color: #f60;
 }
 </style>

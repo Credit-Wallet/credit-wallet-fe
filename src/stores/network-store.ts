@@ -42,6 +42,11 @@ export const useNetworkStore = defineStore('networks', {
     },
     clearNetworks() {
       this.networks = [];
+    },
+    outNetwork(networkId: string) {
+      console.log('networkId', networkId);
+      //delete network
+      this.networks = this.networks.filter((network: Network) => network.id !== networkId);
     }
   },
 });

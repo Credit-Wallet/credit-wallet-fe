@@ -92,7 +92,7 @@ const createTransaction = async () => {
         if (member.selected) {
           return {
             accountId: member.id,
-            amount: member.money
+            amount: parseInt(member.money)
           }
         }
       })
@@ -151,6 +151,7 @@ const createTransaction = async () => {
                   height="40px"
                   :src="member.avatar ? baseUrl + member.avatar : avatar"
                   class="tw-mx-4"
+                  fit="cover"
                 />
                 <div>
                   <p class="tw-truncate">{{ member.username }} <span v-if="member.isSelf">(Tôi)</span></p>

@@ -82,6 +82,10 @@ const cancelBillRequest = async (billId, notificationId) => {
 };
 
 const confirmBillRequest = async (billId, notificationId) => {
+  showLoadingToast({
+    message: 'Đang xử lý...',
+    forbidClick: true,
+  });
   await BillRequestAPI.confirmBillRequest(billId).then((res) => {
     if (res.code === 200) {
       list.value = list.value.map((item) => {
@@ -101,8 +105,12 @@ const confirmBillRequest = async (billId, notificationId) => {
       });
       showSuccessToast('Xác nhận thành công');
     }
-  }).catch(() => {
-    showFailToast('Có lỗi xảy ra! Vui lòng thử lại sau.');
+  }).catch((error) => {
+    if (error.response.data.code === 903) {
+      showFailToast('Bạn đã đạt đến giới hạn nợ, không thể nợ thêm!')
+    } else {
+      showFailToast('Có lỗi xảy ra! Vui lòng thử lại sau!');
+    }
   });
 };
 

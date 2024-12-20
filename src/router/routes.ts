@@ -16,7 +16,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/history/bill/:id',
     component: () => import('layouts/NavbarLayout.vue'),
-    props: { title: 'Chi tiết yêu cầu' },
+    props: { title: 'Chi tiết yêu cầu', buttonRight: false },
     children: [{ path: '', component: () => import('components/histories/DetailBill.vue'), meta: { requiresAuth: true }}],
   },
   {
@@ -32,7 +32,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/notification/bill_request/:id',
     component: () => import('layouts/NavbarLayout.vue'),
-    props: { title: 'Chi tiết yêu cầu thanh toán' },
+    props: { title: 'Chi tiết yêu cầu thanh toán', buttonRight: false },
     children: [{ path: '', component: () => import('components/notifications/DetailBillRequest.vue'), meta: { requiresAuth: true }}],
   },
   {
@@ -43,13 +43,13 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/user/profile',
     component: () => import('layouts/NavbarLayout.vue'),
-    props: { title: 'Hồ sơ' },
+    props: { title: 'Hồ sơ', buttonRight: false },
     children: [{ path: '', component: () => import('components/user/ProfileUser.vue'), meta: { requiresAuth: true }}],
   },
   {
     path: '/user/settings',
     component: () => import('layouts/NavbarLayout.vue'),
-    props: { title: 'Cài đặt' },
+    props: { title: 'Cài đặt', buttonRight: false },
     children: [{ path: '', component: () => import('components/user/SettingUser.vue'), meta: { requiresAuth: true }}],
   },
   {
@@ -60,13 +60,13 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/home/create-transaction',
     component: () => import('layouts/NavbarLayout.vue'),
-    props: { title: 'Chọn người' },
+    props: { title: 'Chọn người', buttonRight: false },
     children: [{ path: '', component: () => import('pages/home/transaction/CreateTransaction.vue'), meta: { requiresAuth: true }}],
   },
   {
     path: '/home/confirm-transaction',
     component: () => import('layouts/NavbarLayout.vue'),
-    props: { title: 'Xác nhận' },
+    props: { title: 'Xác nhận', buttonRight: false },
     children: [{ path: '', component: () => import('pages/home/transaction/ConfirmTransaction.vue'), meta: { requiresAuth: true }}],
   },
   {
@@ -78,13 +78,13 @@ const routes: RouteRecordRaw[] = [
   {
     path:  '/home/networks/:uuid/join',
     component: () => import('layouts/NavbarLayout.vue'),
-    props: { title: 'Tham gia mạng', buttonLeft: false, buttonRight: false },
+    props: { title: 'Tham gia nhóm', buttonLeft: false, buttonRight: false },
     children: [{ path: '', component: () => import('pages/home/NetworkJoin.vue'), meta: { requiresAuth: true }}],
   },
   {
     path: '/home/send-money',
     component: () => import('layouts/NavbarLayout.vue'),
-    props: { title: 'Chuyển tiền' },
+    props: { title: 'Chuyển tiền', buttonRight: false },
     children: [{ path: '', component: () => import('pages/home/send-money/SendMoney.vue'), meta: { requiresAuth: true }}],
   },
   // Always leave this as last one,

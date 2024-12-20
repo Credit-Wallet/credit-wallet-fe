@@ -26,7 +26,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <van-skeleton v-if="loading" title :row="5" class="tw-mt-2" />
+  <div v-else>
     <!-- Số tiền đã thanh toán -->
     <div class="payment-info">
       <h2 class="amount-paid">{{ formatMoney(bill.amount) }}</h2>

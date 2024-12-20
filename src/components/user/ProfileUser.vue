@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import avatar from 'assets/images/avatar.jpeg';
 import { useAccountStore } from 'stores/account-store';
-import { showFailToast, showSuccessToast, showToast } from 'vant';
+import { showFailToast, showLoadingToast, showSuccessToast, showToast } from 'vant';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import AuthAPI from 'app/api/auth';
 
@@ -20,7 +20,7 @@ const updateEmail = ref(account.value.email ?? '');
 const formUpdateEmail = ref(null);
 
 const actionsUpdateImage = [
-  { name: 'Chụp ảnh', value: 0},
+  { name: 'Chụp ảnh', value: 0 },
   { name: 'Chọn ảnh từ thư viện', value: 1 },
   { name: 'Hủy', value: 2 }
 ];
@@ -55,6 +55,11 @@ const selectImageFromGallery = async () => {
   const formData = new FormData();
   formData.append('file', blob, 'avatar.' + image.format); // Đặt tên tệp với phần mở rộng phù hợp
 
+  showUpdateImage.value = false;
+  showLoadingToast({
+    message: 'Đang xử lý...',
+    forbidClick: true,
+  });
   // Gửi ảnh lên server
   await AuthAPI.uploadAvatar(formData).then((response) => {
     if (response.code === 200) {
@@ -66,14 +71,14 @@ const selectImageFromGallery = async () => {
   }).finally(() => {
     showUpdateImage.value = false;
   });
-}
+};
 
 const selectImageFromCamera = async () => {
   const image = await Camera.getPhoto({
     quality: 90,
     allowEditing: false,
     resultType: CameraResultType.DataUrl,
-    source: CameraSource.Camera,
+    source: CameraSource.Camera
   });
   selectedImage.value = image.dataUrl; // Gán URL của ảnh đã chọn
   console.log(image.format);
@@ -93,6 +98,11 @@ const selectImageFromCamera = async () => {
   const formData = new FormData();
   formData.append('file', blob, 'avatar.' + image.format); // Đặt tên tệp với phần mở rộng phù hợp
 
+  showUpdateImage.value = false;
+  showLoadingToast({
+    message: 'Đang xử lý...',
+    forbidClick: true,
+  });
   // Gửi ảnh lên server
   await AuthAPI.uploadAvatar(formData).then((response) => {
     if (response.code === 200) {
@@ -104,7 +114,7 @@ const selectImageFromCamera = async () => {
   }).finally(() => {
     showUpdateImage.value = false;
   });
-}
+};
 
 const onSelect = (action) => {
   if (action.value === 0) {
@@ -122,7 +132,7 @@ const onFailed = (error) => {
 
 const handleConfirmUpdateName = (action) => {
   if (action === 'confirm') {
-    formUpdateName.value.validate().then( async () => {
+    formUpdateName.value.validate().then(async () => {
       await AuthAPI.updateUsername(updateName.value).then((response) => {
         if (response.code === 204) {
           accountStore.updateName(updateName.value);
@@ -132,7 +142,7 @@ const handleConfirmUpdateName = (action) => {
         }
       }).finally(() => {
         dialogUpdateName.value = false;
-      })
+      });
     }).catch((error) => {
       console.log(error);
     });
@@ -144,7 +154,7 @@ const handleConfirmUpdateName = (action) => {
 
 const handleConfirmUpdateEmail = (action) => {
   if (action === 'confirm') {
-    formUpdateEmail.value.validate().then( async () => {
+    formUpdateEmail.value.validate().then(async () => {
       await AuthAPI.updateEmail(updateEmail.value).then((response) => {
         if (response.code === 204) {
           accountStore.updateEmail(updateEmail.value);
@@ -157,7 +167,7 @@ const handleConfirmUpdateEmail = (action) => {
         }
       }).finally(() => {
         dialogUpdateEmail.value = false;
-      })
+      });
     }).catch((error) => {
       console.log(error);
     });
@@ -177,7 +187,9 @@ const handleConfirmUpdateEmail = (action) => {
       </template>
 
       <template #right-icon>
-        <van-image :src="account.urlAvatar ? baseUrl + account.urlAvatar : avatar" width="40" height="40" round />
+        <van-image :src="account.urlAvatar ? baseUrl + account.urlAvatar : avatar" width="3rem"
+                   height="3rem"
+                   fit="cover" round />
       </template>
     </van-cell>
 
@@ -189,7 +201,8 @@ const handleConfirmUpdateEmail = (action) => {
       <template #title>
         <div class="update-title">Cập nhật thông tin</div>
         <div class="update-description">
-          Theo quy định NHNN, bạn cần cập nhật CCCD/CC gắn chip để tiếp tục giao dịch. Chọn Cập nhật ngay > Xác minh bằng NFC để cập nhật
+          Theo quy định NHNN, bạn cần cập nhật CCCD/CC gắn chip để tiếp tục giao dịch. Chọn Cập nhật ngay > Xác minh
+          bằng NFC để cập nhật
         </div>
       </template>
       <template #right-icon>
@@ -200,19 +213,20 @@ const handleConfirmUpdateEmail = (action) => {
 
   <van-action-sheet v-model:show="showUpdateImage" :actions="actionsUpdateImage" @select="onSelect" />
 
-  <van-dialog v-model:show="dialogUpdateName" title="Chỉnh sửa tên" show-cancel-button :beforeClose="handleConfirmUpdateName">
+  <van-dialog v-model:show="dialogUpdateName" title="Chỉnh sửa tên" show-cancel-button
+              :beforeClose="handleConfirmUpdateName">
     <template #title>
       <span class="tw-text-base text-weight-bold">Chỉnh sửa tên</span>
     </template>
 
     <template #default>
       <van-form @failed="onFailed" ref="formUpdateName">
-          <van-field
-            v-model="updateName"
-            label="Tên"
-            placeholder="Nhập tên"
-            required
-            :rules="[
+        <van-field
+          v-model="updateName"
+          label="Tên"
+          placeholder="Nhập tên"
+          required
+          :rules="[
               { pattern: /^.{3,}$/, message: 'Tên phải có ít nhất 3 ký tự' },
               { pattern: /^.{1,50}$/, message: 'Tên không được vượt quá 50 ký tự' }
             ]" />
@@ -220,7 +234,8 @@ const handleConfirmUpdateEmail = (action) => {
     </template>
   </van-dialog>
 
-  <van-dialog v-model:show="dialogUpdateEmail" title="Chỉnh sửa tên" show-cancel-button :beforeClose="handleConfirmUpdateEmail">
+  <van-dialog v-model:show="dialogUpdateEmail" title="Chỉnh sửa tên" show-cancel-button
+              :beforeClose="handleConfirmUpdateEmail">
     <template #title>
       <span class="tw-text-base text-weight-bold">Chỉnh sửa email</span>
     </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+// import { ref } from 'vue';
 
-const link = ref('http://localhost:8080/transaction/123456');
+// const link = ref('http://localhost:8080/transaction/123456');
 </script>
 
 <template>
@@ -15,14 +15,13 @@ const link = ref('http://localhost:8080/transaction/123456');
         <van-button type="default">Hủy yêu cầu</van-button>
         <van-button type="primary" to="/">Về trang chủ</van-button>
       </div>
-
-      <div class="tw-mt-4">
-        <p>Nhắc nhở qua kênh khác</p>
-        <div class="tw-flex">
-          <van-field readonly v-model="link" class="tw-mr-2" />
-          <van-button type="primary">Gửi link</van-button>
-        </div>
-      </div>
+<!--      <div class="tw-mt-4">-->
+<!--        <p>Nhắc nhở qua kênh khác</p>-->
+<!--        <div class="tw-flex">-->
+<!--          <van-field readonly v-model="link" class="tw-mr-2" />-->
+<!--          <van-button type="primary">Gửi link</van-button>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
 </template>
 

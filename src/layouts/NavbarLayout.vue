@@ -16,11 +16,11 @@ const props = defineProps({
   },
   leftText: {
     type: String,
-    default: 'Back',
+    default: 'Trở về',
   },
   rightText: {
     type: String,
-    default: 'Button',
+    default: 'Tiếp tục',
   },
   rightPath: {
     type: String,

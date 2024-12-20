@@ -5,12 +5,14 @@ import CreateNetwork from 'components/homes/network/CreateNetwork.vue';
 import { useNetworkStore } from 'stores/network-store';
 import TransactionAPI from 'app/api/transaction';
 import { formatMoney } from 'src/util/formatter';
+import { useWalletStore } from 'stores/wallet-store';
 
 const balance = ref(0)
 const sheetWallet = ref(false)
 const dialogCreateWallet = ref(false)
 const networks = useNetworkStore()
 const loading = ref(false)
+const walletStore = useWalletStore()
 
 const fetchBalance = async () => {
   loading.value = true
@@ -18,6 +20,7 @@ const fetchBalance = async () => {
     .then((res) => {
       balance.value = res.result.balance
       balance.value = Math.round(balance.value * 10) / 10
+      walletStore.setWallet(res.result)
     })
     .catch((error) => {
       console.log('Fetch balance failed:', error)
@@ -54,11 +57,11 @@ onMounted(() => {
     </div>
   </div>
 
-  <van-action-sheet v-model:show="sheetWallet" title="Mạng" class="tw-h-[100vh]">
+  <van-action-sheet v-model:show="sheetWallet" title="Nhóm" class="tw-h-[100vh]">
     <template #default>
       <div class="tw-pl-4 tw-pr-4">
         <div class="tw-flex tw-items-center tw-justify-between">
-          <span class="tw-text-lg">Danh sách mạng</span>
+          <span class="tw-text-lg">Danh sách nhóm</span>
 
           <van-button round :plain="true">
             <q-icon name="add" size="30px" @click="dialogCreateWallet = true" />

@@ -47,6 +47,7 @@ onMounted(() => {
           round
           width="40px"
           height="40px"
+          fit="cover"
           :src="member.urlAvatar ? baseUrl + member.urlAvatar : avatar"
         />
         <div class="tw-ml-4 tw-flex-grow">

@@ -48,10 +48,17 @@ const createWallet = () => {
 //       // on cancel
 //     });
 // }
+
+const createNetworkSuccess = () => {
+  showDialog.value = false
+  sheetCreateNetwork.value = false
+  // dialogWordPrivate.value = false
+  // dialogConfirmWordPrivate.value = false
+}
 </script>
 
 <template>
-  <van-dialog v-model:show="showDialog" title="Kết nối mạng" :show-confirm-button="false" show-cancel-button cancel-button-text="Hủy">
+  <van-dialog v-model:show="showDialog" title="Kết nối nhóm" :show-confirm-button="false" show-cancel-button cancel-button-text="Hủy">
     <template #default>
       <van-row justify="center" class="tw-my-4">
         <van-col span="6">
@@ -67,7 +74,7 @@ const createWallet = () => {
             @click = "createWallet"
           >
             <template #title>
-              <span class="tw-text-base text-weight-bold">Tạo một ví mới</span>
+              <span class="tw-text-base text-weight-bold">Tạo một nhóm mới</span>
             </template>
 
             <template #thumb>
@@ -79,28 +86,28 @@ const createWallet = () => {
         </van-col>
       </van-row>
 
-      <van-row class="tw-my-2">
-        <van-col span="24" class="tw-px-4">
-          <van-card
-            class="tw-rounded-xl card-create-wallet tw-h-[64px]"
-            desc="Nhập, khôi phục"
-          >
-            <template #title>
-              <span class="tw-text-base text-weight-bold">Thêm ví hiện có</span>
-            </template>
+<!--      <van-row class="tw-my-2">-->
+<!--        <van-col span="24" class="tw-px-4">-->
+<!--          <van-card-->
+<!--            class="tw-rounded-xl card-create-wallet tw-h-[64px]"-->
+<!--            desc="Nhập, khôi phục"-->
+<!--          >-->
+<!--            <template #title>-->
+<!--              <span class="tw-text-base text-weight-bold">Thêm ví hiện có</span>-->
+<!--            </template>-->
 
-            <template #thumb>
-              <van-button round class="icon-container-1" :plain="true">
-                <q-icon name="add" size="30px" color="primary" />
-              </van-button>
-            </template>
-          </van-card>
-        </van-col>
-      </van-row>
+<!--            <template #thumb>-->
+<!--              <van-button round class="icon-container-1" :plain="true">-->
+<!--                <q-icon name="add" size="30px" color="primary" />-->
+<!--              </van-button>-->
+<!--            </template>-->
+<!--          </van-card>-->
+<!--        </van-col>-->
+<!--      </van-row>-->
     </template>
   </van-dialog>
 
-  <sheet-creat-network v-model:showSheet="sheetCreateNetwork" />
+  <sheet-creat-network v-model:showSheet="sheetCreateNetwork" @createNetwork="createNetworkSuccess" />
 <!--  <van-action-sheet v-model:show="dialogWordPrivate" title="Cụm từ bí mật" :show-confirm-button="false" show-cancel-button class="tw-h-[100vh]">-->
 <!--    <template #default>-->
 <!--      <div class="tw-px-4 tw-py-2">-->

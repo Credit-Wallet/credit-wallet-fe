@@ -78,7 +78,6 @@ const copyLink = (hash) => {
             <div class="transaction-description">{{ item.description }}</div>
             <div class="transaction-amount tw-flex tw-justify-between">
               <span>Số tiền: {{ formatMoney(item.amount) }}</span>
-              <span>Mạng: {{ item.networkId }}</span>
             </div>
             <div class="tw-flex tw-justify-between">
               <div class="transaction-time">

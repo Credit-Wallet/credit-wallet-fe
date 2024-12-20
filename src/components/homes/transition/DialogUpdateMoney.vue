@@ -108,6 +108,7 @@ const handleClose = (action) => {
           width="50px"
           height="50px"
           :src="member.avatar || avatar"
+          fit="cover"
           class="tw-mr-4"
         />
         <span class="tw-text-base text-weight-bold">{{ member.username }}</span>

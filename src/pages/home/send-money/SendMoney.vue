@@ -95,6 +95,7 @@ const transferMoney = () => {
             round
             width="40px"
             height="40px"
+            fit="cover"
             :src="member.avatar ? baseUrl + member.avatar : avatar"
           />
           <div class="tw-ml-4 tw-flex-grow">
@@ -114,6 +115,7 @@ const transferMoney = () => {
             round
             width="40px"
             height="40px"
+            fit="cover"
             :src="memberSendMoney.avatar ? baseUrl + memberSendMoney.avatar : avatar"
           />
           <div class="tw-ml-4 tw-flex-grow">

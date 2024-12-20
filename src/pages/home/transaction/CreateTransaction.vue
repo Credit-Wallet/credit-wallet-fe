@@ -188,6 +188,7 @@ onMounted(
                 round
                 width="50px"
                 height="50px"
+                fit="cover"
                 :src="mySelf.avatar ? baseUrl + mySelf.avatar : avatar"
               />
               <span class="tw-text-sm tw-mt-1 tw-truncate tw-w-full tw-text-center">Bao gồm tôi</span>
@@ -202,6 +203,7 @@ onMounted(
               round
               width="50px"
               height="50px"
+              fit="cover"
               :src="mySelf.avatar ? baseUrl + mySelf.avatar : avatar"
               @click="updateMySelf"
             />
@@ -213,6 +215,7 @@ onMounted(
                 round
                 width="50px"
                 height="50px"
+                fit="cover"
                 :src="member.avatar ? baseUrl + member.avatar : avatar"
               />
               <span class="tw-text-sm tw-mt-1 tw-truncate tw-w-full tw-text-center">{{ member.username }}</span>
@@ -240,6 +243,7 @@ onMounted(
             round
             width="40px"
             height="40px"
+            fit="cover"
             :src="member.avatar ? baseUrl + member.avatar : avatar"
           />
           <div class="tw-ml-4 tw-flex-grow">

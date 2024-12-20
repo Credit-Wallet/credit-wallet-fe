@@ -54,19 +54,19 @@ const createNetwork = async () => {
     };
     const response = await NetworkAPI.add(formData);
     networks.addNetwork(response.result as Network)
-    showSuccessToast('Tạo mạng thành công')
+    showSuccessToast('Tạo nhóm thành công')
     showSheet.value = false
     resetForm()
     emit('createNetwork')
   } catch (error) {
     console.log('Create network failed:', error);
-    showFailToast('Tạo mạng thất bại')
+    showFailToast('Tạo nhóm thất bại')
   }
 }
 </script>
 
 <template>
-  <van-action-sheet v-model:show="showSheet" title="Tạo mạng mới" :show-confirm-button="false" show-cancel-button class="tw-h-[100vh]">
+  <van-action-sheet v-model:show="showSheet" title="Tạo nhóm mới" :show-confirm-button="false" show-cancel-button class="tw-h-[100vh]">
     <template #default>
       <div>
         <form-network ref="formNetworkRef" :form="form" />
